@@ -1,11 +1,6 @@
 # ZF2 Email Module
 This module is not ready for production use
 
-
-## To do
-
-- [ ] Manage attachments
-
 ### Example config node
 
 Smtp

@@ -12,7 +12,6 @@ use Zend\Mail\Transport\SmtpOptions;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Renderer\PhpRenderer;
 
 /**
  * Class MailAbstractServiceFactory
