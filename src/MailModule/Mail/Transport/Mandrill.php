@@ -53,8 +53,23 @@ class Mandrill implements TransportInterface
             ];
         }
 
+        $messageBody = $message->getBody();
+        switch (true) {
+            case $messageBody instanceof \Zend\Mime\Message:
+                /** @var \Zend\Mime\Message $messageBody */
+                $body = $messageBody->generateMessage();
+                break;
+            case is_string($messageBody):
+                $body = $messageBody;
+                break;
+            default:
+                $body = (string)$messageBody;
+                break;
+        }
+
+
         $message = array(
-            'html' => $message->getBody(),
+            'html' => $body,
             'text' => $message->getBodyText(),
             'subject' => $message->getSubject(),
             'from_email' => $message->getFrom()->current()->getEmail(),

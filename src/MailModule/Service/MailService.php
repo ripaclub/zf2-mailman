@@ -104,17 +104,16 @@ class MailService
     {
         switch (true) {
             case is_string($body) && preg_match("/<[^<]+>/", $body, $m) != 0:
-                $part = new Part($body);
-                $part->type = Mime::TYPE_HTML;
-                $part->charset = 'utf8';
-                $message = new \Zend\Mime\Message();
-                $message->addPart($part);
-                $this->message->setBody($message);
+                $bodyPart = new \Zend\Mime\Message();
+                $bodyMessage = new \Zend\Mime\Part($body);
+                $bodyMessage->type = 'text/html';
+                $bodyPart->setParts(array($bodyMessage));
+                $this->message->setBody($bodyPart);
+                $this->message->setEncoding('UTF-8');
                 break;
             default:
                 $this->message->setBody($body);
                 break;
-
         }
 
         return $this;
