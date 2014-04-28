@@ -3,10 +3,12 @@
 
 Example config node
 
-```
+Smtp
+
+```php
 'mail_module' => [
-    'default' => [
-        'sender' => 'lorenzofontana.work@gmail.com',
+    'gmail' => [
+        'default_sender' => 'mailmoduletest@gmail.com',
         'transport' => [
             'type' => 'smtp',
             'options' => [
@@ -15,11 +17,30 @@ Example config node
                  'connection_class' => 'login',
                  'connection_config' => [
                      'ssl'     => 'tls',
-                     'username' => 'lorenzofontana.work@gmail.com',
+                     'username' => 'mailmoduletest@gmail.com',
                      'password' => 'MYSECRETPASSWORD',
                  ]
              ]
         ],
     ],
 ],
+```
+
+
+Mandrill
+
+```php
+'mail_module' => [
+    'mandrill' => [
+        'default_sender' => 'test@mail.com',
+        'transport' => [
+            'type' => 'mandrill',
+            'options' => [
+                'apikey' => 'MYSECRETMANDRILLKEY',
+                'sub_account' => 'my-optional-subaccount-if-any'
+            ],
+        ],
+    ],
+]
+
 ```

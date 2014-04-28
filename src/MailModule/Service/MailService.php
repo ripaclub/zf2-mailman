@@ -50,6 +50,8 @@ class MailService
 
     /**
      * Send
+     *
+     * @return mixed
      */
     public function send()
     {

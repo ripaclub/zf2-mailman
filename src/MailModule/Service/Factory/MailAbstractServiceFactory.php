@@ -2,8 +2,10 @@
 
 namespace MailModule\Service\Factory;
 
+use MailModule\Mail\Transport\MandrillOptions;
 use MailModule\Service\MailService;
 use MailModule\Exception\RuntimeException;
+use MailModule\Mail\Transport\Mandrill;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\Smtp;
 use Zend\Mail\Transport\SmtpOptions;
@@ -54,14 +56,6 @@ class MailAbstractServiceFactory implements AbstractFactoryInterface
             return false;
         }
 
-        if (!isset($configNode['sender'])) {
-            return false;
-        }
-
-        if (!is_string($configNode['sender'])) {
-            return false;
-        }
-
         if (!isset($configNode['transport']['type'])) {
             return false;
         }
@@ -90,7 +84,9 @@ class MailAbstractServiceFactory implements AbstractFactoryInterface
         $configNode = $config[$requestedName];
 
         $message = new Message();
-        $message->setFrom($configNode['sender']);
+        if (isset($configNode['default_sender'])) {
+            $message->setFrom($configNode['default_sender']);
+        }
         $renderer = new PhpRenderer();
 
         $transport = null;
@@ -99,6 +95,12 @@ class MailAbstractServiceFactory implements AbstractFactoryInterface
                 $transport = new Smtp();
                 $smtpOptions = new SmtpOptions($configNode['transport']['options']);
                 $transport->setOptions($smtpOptions);
+                break;
+            case 'mandrill':
+                $transport = new Mandrill();
+                $mandrillOptions = new MandrillOptions($configNode['transport']['options']);
+                $transport->setOptions($mandrillOptions);
+                break;
         }
 
         if (!$transport) {

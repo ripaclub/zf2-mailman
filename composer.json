@@ -14,7 +14,11 @@
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*",
-        "zendframework/zendframework": "2.*"
+        "zendframework/zendframework": "2.*",
+        "mandrill/mandrill": "1.0.*"
+    },
+    "suggest": {
+        "mandrill/mandrill": "Allows usage of the Mandrill transport."
     },
     "autoload": {
         "psr-0": {
