@@ -2,10 +2,10 @@
 
 namespace MailModule\Mail\Transport;
 
-use MailModule\Mail\Transport\MandrillOptions;
 use Zend\Mail\Transport\TransportInterface;
 use Zend\Mail;
 use \Mandrill as MandrillClient;
+use Zend\Mime\Message;
 
 /**
  * Class Mandrill
@@ -42,20 +42,9 @@ class Mandrill implements TransportInterface
     {
         $mandrill = new MandrillClient($this->options->getApikey());
 
-        $recipients = [];
-
-        /** @var Mail\Address() $recipient */
-        foreach ($message->getTo() as $recipient) {
-            $recipients[] = [
-                'email' => $recipient->getEmail(),
-                'name' => $recipient->getName(),
-                'type' => 'to'
-            ];
-        }
-
         $messageBody = $message->getBody();
         switch (true) {
-            case $messageBody instanceof \Zend\Mime\Message:
+            case $messageBody instanceof Message:
                 /** @var \Zend\Mime\Message $messageBody */
                 $body = $messageBody->generateMessage();
                 break;
@@ -67,18 +56,42 @@ class Mandrill implements TransportInterface
                 break;
         }
 
-
         $message = array(
             'html' => $body,
             'text' => $message->getBodyText(),
             'subject' => $message->getSubject(),
             'from_email' => $message->getFrom()->current()->getEmail(),
             'from_name' => $message->getFrom()->current()->getName(),
-            'to' => $recipients,
+            'to' => array_merge(
+                $this->mapAddressListToArray($message->getTo(), 'to'),
+                $this->mapAddressListToArray($message->getCc(), 'cc'),
+                $this->mapAddressListToArray($message->getBcc(), 'bcc')
+            ),
             'headers' => $message->getHeaders()->toArray(),
             'subaccount' => $this->options->getSubAccount(),
         );
 
         return $mandrill->messages->send($message);
+    }
+
+    /**
+     * Map Address List to Mandrill array
+     *
+     * @param Mail\AddressList $addresses
+     * @param string $type
+     * @return array
+     */
+    protected function mapAddressListToArray(Mail\AddressList $addresses, $type = 'to')
+    {
+        $array = [];
+        /** @var Mail\Address() $address */
+        foreach ($addresses as $address) {
+            $array[] = [
+                'email' => $address->getEmail(),
+                'name' => $address->getName(),
+                'type' => $type
+            ];
+        }
+        return $array;
     }
 }
