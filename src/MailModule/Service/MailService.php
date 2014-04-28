@@ -22,11 +22,6 @@ class MailService
     private $message;
 
     /**
-     * @var \Zend\View\Renderer\RendererInterface
-     */
-    private $renderer;
-
-    /**
      * @var \Zend\Mail\Transport\TransportInterface
      */
     private $transport;
@@ -40,13 +35,11 @@ class MailService
      * Ctor
      *
      * @param Message $message
-     * @param RendererInterface $renderer
      * @param TransportInterface $transport
      */
-    public function __construct(Message $message, RendererInterface $renderer, TransportInterface $transport)
+    public function __construct(Message $message, TransportInterface $transport)
     {
         $this->message = $message;
-        $this->renderer = $renderer;
         $this->transport = $transport;
     }
 

@@ -87,7 +87,6 @@ class MailAbstractServiceFactory implements AbstractFactoryInterface
         if (isset($configNode['default_sender'])) {
             $message->setFrom($configNode['default_sender']);
         }
-        $renderer = new PhpRenderer();
 
         $transport = null;
         switch ($configNode['transport']['type']) {
@@ -112,7 +111,7 @@ class MailAbstractServiceFactory implements AbstractFactoryInterface
             );
         }
 
-        $mailService = new MailService($message, $renderer, $transport);
+        $mailService = new MailService($message, $transport);
         return $mailService;
 
     }
