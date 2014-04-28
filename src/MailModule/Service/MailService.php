@@ -4,6 +4,8 @@ namespace MailModule\Service;
 
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
+use Zend\Mime\Mime;
+use Zend\Mime\Part;
 use Zend\View\Renderer\RendererInterface;
 
 /**
@@ -89,6 +91,32 @@ class MailService
     public function setAttachments(array $attachments)
     {
         $this->attachments = $attachments;
+        return $this;
+    }
+
+    /**
+     * Set body
+     *
+     * @param string|\Zend\Mime\Message $body
+     * @return $this
+     */
+    public function setBody($body)
+    {
+        switch (true) {
+            case is_string($body) && preg_match("/<[^<]+>/", $body, $m) != 0:
+                $part = new Part($body);
+                $part->type = Mime::TYPE_HTML;
+                $part->charset = 'utf8';
+                $message = new \Zend\Mime\Message();
+                $message->addPart($part);
+                $this->message->setBody($message);
+                break;
+            default:
+                $this->message->setBody($body);
+                break;
+
+        }
+
         return $this;
     }
 }
