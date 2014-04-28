@@ -4,9 +4,6 @@ namespace MailModule\Service;
 
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
-use Zend\Mime\Mime;
-use Zend\Mime\Part;
-use Zend\View\Renderer\RendererInterface;
 
 /**
  * Class MailService
