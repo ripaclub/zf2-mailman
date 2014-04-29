@@ -85,6 +85,16 @@ class MailService
     }
 
     /**
+     * Return the attachments
+     *
+     * @return array
+     */
+    public function getAttachments()
+    {
+        return $this->attachments;
+    }
+
+    /**
      * Set body
      *
      * @param string|\Zend\Mime\Message $body
