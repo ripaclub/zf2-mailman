@@ -10,7 +10,6 @@ use Zend\Mail\Message;
 use Zend\Mail\Transport\Smtp;
 use Zend\Mail\Transport\SmtpOptions;
 use Zend\ServiceManager\AbstractFactoryInterface;
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -50,6 +49,10 @@ class MailAbstractServiceFactory implements AbstractFactoryInterface
         }
 
         $configNode = $config[$requestedName];
+
+        if (!isset($configNode['transport'])) {
+            return false;
+        }
 
         if (!is_array($configNode['transport'])) {
             return false;

@@ -96,5 +96,4 @@ HTML;
     {
         $this->assertNull($this->mailService->send());
     }
-
 }
