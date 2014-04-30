@@ -34,6 +34,44 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
         $sf->canCreateServiceWithName($this->sm, 'gmail', 'gmail');
     }
 
+
+    public function testCanCreateServiceWithoutConfig()
+    {
+        $sf = new MailAbstractServiceFactory();
+        $sf->canCreateServiceWithName($this->sm, 'gmail', 'gmail');
+    }
+
+    public function testCanCreateServiceDouble()
+    {
+        $config = [
+            'mail_module' => [
+                'gmail' => [
+                    'default_sender' => 'mailmoduletest@gmail.com',
+                    'transport'      => [
+                        'type'    => 'smtp',
+                        'options' => [
+                            'host'              => 'smtp.gmail.com',
+                            'port'              => '587',
+                            'connection_class'  => 'login',
+                            'connection_config' => [
+                                'ssl'      => 'tls',
+                                'username' => 'mailmoduletest@gmail.com',
+                                'password' => 'MYSECRETPASSWORD',
+                            ]
+                        ]
+                    ],
+                ],
+            ],
+        ];
+
+        $this->sm->setService('Config', $config);
+
+        $sf = new MailAbstractServiceFactory();
+        $sf->canCreateServiceWithName($this->sm, 'gmail', 'gmail');
+        $sf->canCreateServiceWithName($this->sm, 'gmail', 'gmail');
+    }
+
+
     /**
      * @dataProvider creationConfigDataProvider
      */
@@ -73,6 +111,7 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
     }
 
+
     /**
      * Config Data Provider
      * Data provider used to test if the service can be created
@@ -82,6 +121,11 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
     public function canCreateConfigDataProvider()
     {
         return [
+            [
+                [
+                    'another_key' => [],
+                ]
+            ],
             [
                 [
                     'mail_module' => [],
