@@ -24,7 +24,7 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider configDataProvider
+     * @dataProvider canCreateConfigDataProvider
      */
     public function testCanCreateService($config)
     {
@@ -34,8 +34,52 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
         $sf->canCreateServiceWithName($this->sm, 'gmail', 'gmail');
     }
 
+    /**
+     * @dataProvider creationConfigDataProvider
+     */
+    public function testCreateServiceWithName($config)
+    {
 
-    public function configDataProvider()
+        $node = new \ArrayIterator($config['mail_module']);
+        $this->sm->setService('Config', $config);
+
+        $sf = new MailAbstractServiceFactory();
+        $sf->createServiceWithName($this->sm, $node->key(), $node->key());
+    }
+
+    /**
+     * @expectedException \MailModule\Exception\RuntimeException
+     */
+    public function testCreateServiceWithNameThrowingException()
+    {
+
+        $config = [
+            'mail_module' => [
+                'anothertathdoesntwork' => [
+                    'default_sender' => 'mailmoduletest@thatdoesnotwork.com',
+                    'transport'      => [
+                        'type'    => 'thisdoesntwork',
+                        'options' => []
+                    ],
+                ],
+            ],
+        ];
+
+        $node = new \ArrayIterator($config['mail_module']);
+        $this->sm->setService('Config', $config);
+
+        $sf = new MailAbstractServiceFactory();
+        $sf->createServiceWithName($this->sm, $node->key(), $node->key());
+
+    }
+
+    /**
+     * Config Data Provider
+     * Data provider used to test if the service can be created
+     *
+     * @return array
+     */
+    public function canCreateConfigDataProvider()
     {
         return [
             [
@@ -48,14 +92,14 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
                     'mail_module' => [
                         'gmail' => [
                             'default_sender' => 'mailmoduletest@gmail.com',
-                            'transport' => [
-                                'type' => 'smtp',
+                            'transport'      => [
+                                'type'    => 'smtp',
                                 'options' => [
-                                    'host' => 'smtp.gmail.com',
-                                    'port' => '587',
-                                    'connection_class' => 'login',
+                                    'host'              => 'smtp.gmail.com',
+                                    'port'              => '587',
+                                    'connection_class'  => 'login',
                                     'connection_config' => [
-                                        'ssl' => 'tls',
+                                        'ssl'      => 'tls',
                                         'username' => 'mailmoduletest@gmail.com',
                                         'password' => 'MYSECRETPASSWORD',
                                     ]
@@ -86,7 +130,7 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
                     'mail_module' => [
                         'gmail' => [
                             'default_sender' => 'mailmoduletest@gmail.com',
-                            'transport' => ''
+                            'transport'      => ''
                         ],
                     ],
                 ],
@@ -96,7 +140,7 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
                     'mail_module' => [
                         'gmail' => [
                             'default_sender' => 'mailmoduletest@gmail.com',
-                            'transport' => [
+                            'transport'      => [
 
                             ]
                         ],
@@ -108,7 +152,7 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
                     'mail_module' => [
                         'gmail' => [
                             'default_sender' => 'mailmoduletest@gmail.com',
-                            'transport' => [
+                            'transport'      => [
                                 'type' => 'smtp'
                             ]
                         ],
@@ -117,5 +161,57 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
             ]
 
         ];
+    }
+
+    /**
+     * Creation Config Data Provider
+     * Data provider used to simulate creation of mail services.
+     *
+     * @return array
+     */
+    public function creationConfigDataProvider()
+    {
+
+        return [
+            [
+                [
+                    'mail_module' => [
+                        'gmail' => [
+                            'default_sender' => 'mailmoduletest@gmail.com',
+                            'transport'      => [
+                                'type'    => 'smtp',
+                                'options' => [
+                                    'host'              => 'smtp.gmail.com',
+                                    'port'              => '587',
+                                    'connection_class'  => 'login',
+                                    'connection_config' => [
+                                        'ssl'      => 'tls',
+                                        'username' => 'mailmoduletest@gmail.com',
+                                        'password' => 'MYSECRETPASSWORD',
+                                    ]
+                                ]
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            [
+                [
+                    'mail_module' => [
+                        'mandrill' => [
+                            'default_sender' => 'mailmoduletest@yourmandrillsendingdomain.com',
+                            'transport'      => [
+                                'type'    => 'mandrill',
+                                'options' => [
+                                    'apikey'      => 'YOURSECRETAPIKEY',
+                                    'sub_account' => 'subaccount'
+                                ]
+                            ],
+                        ],
+                    ],
+                ]
+            ]
+        ];
+
     }
 }
