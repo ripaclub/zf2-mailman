@@ -1,5 +1,5 @@
 {
-    "name": "fontanalorenzo/zf2-mail-module",
+    "name": "majinbuu/zf2-mail-module",
     "description": "ZF2 module to handle emails",
     "license": "BSD-2-Clause",
     "minimum-stability": "dev",
