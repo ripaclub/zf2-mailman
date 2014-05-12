@@ -52,24 +52,26 @@ class MailService
         $body = $this->getMessage()->getBody();
         if (count($this->attachments) > 0) {
             if (!$body instanceof \Zend\Mime\Message) {
-                $bodyPart = new \Zend\Mime\Message();
+                $body = new \Zend\Mime\Message();
                 $bodyMessage = new \Zend\Mime\Part($body);
                 $bodyMessage->type = Mime::TYPE_HTML;
-                $bodyPart->addPart($bodyMessage);
-
-                foreach ($this->attachments as $attachment) {
-                    if (is_file($attachment) && is_readable($attachment)) {
-                        $attachment = new Part(fopen($attachment, 'r'));
-                        $attachment->type = 'application/pdf';
-                        $attachment->encoding = Mime::ENCODING_BASE64;
-                        $attachment->disposition = Mime::DISPOSITION_ATTACHMENT;
-                        $bodyPart->addPart($attachment);
-                    }
-                }
-                $this->message->setBody($bodyPart);
-                $this->message->setEncoding('UTF-8');
+                $body->addPart($bodyMessage);
             }
+
+            foreach ($this->attachments as $attachment) {
+                if (is_file($attachment) && is_readable($attachment)) {
+                    $attachment = new Part(fopen($attachment, 'r'));
+                    $attachment->type = 'application/pdf';
+                    $attachment->encoding = Mime::ENCODING_BASE64;
+                    $attachment->disposition = Mime::DISPOSITION_ATTACHMENT;
+                    $body->addPart($attachment);
+                }
+            }
+
+            $this->setBody($body);
+            $this->message->setEncoding('UTF-8');
         }
+
         return $this->transport->send($this->message);
     }
 
