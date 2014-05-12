@@ -57,14 +57,14 @@ class MailService
                 $bodyMessage->type = Mime::TYPE_HTML;
                 $body->addPart($bodyMessage);
             }
-
+            $fileInfo = new \finfo(FILEINFO_MIME_TYPE);
             foreach ($this->attachments as $attachment) {
                 if (is_file($attachment) && is_readable($attachment)) {
-                    $attachment = new Part(fopen($attachment, 'r'));
-                    $attachment->type = 'application/pdf';
-                    $attachment->encoding = Mime::ENCODING_BASE64;
-                    $attachment->disposition = Mime::DISPOSITION_ATTACHMENT;
-                    $body->addPart($attachment);
+                    $part = new Part(fopen($attachment, 'r'));
+                    $part->type = $fileInfo->file($attachment);
+                    $part->encoding = Mime::ENCODING_BASE64;
+                    $part->disposition = Mime::DISPOSITION_ATTACHMENT;
+                    $body->addPart($part);
                 }
             }
 
