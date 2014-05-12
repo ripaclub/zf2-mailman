@@ -53,7 +53,7 @@ class MailService
         if (count($this->attachments) > 0) {
             if (!$body instanceof \Zend\Mime\Message) {
                 $body = new \Zend\Mime\Message();
-                $bodyMessage = new \Zend\Mime\Part($body);
+                $bodyMessage = new \Zend\Mime\Part($this->getMessage()->getBody());
                 $bodyMessage->type = Mime::TYPE_HTML;
                 $body->addPart($bodyMessage);
             }
