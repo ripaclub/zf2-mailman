@@ -60,7 +60,9 @@ class MailService
             $fileInfo = new \finfo(FILEINFO_MIME_TYPE);
             foreach ($this->attachments as $attachment) {
                 if (is_file($attachment) && is_readable($attachment)) {
+                    $pathinfo = pathinfo($attachment);
                     $part = new Part(fopen($attachment, 'r'));
+                    $part->filename = $pathinfo['basename'];
                     $part->type = $fileInfo->file($attachment);
                     $part->encoding = Mime::ENCODING_BASE64;
                     $part->disposition = Mime::DISPOSITION_ATTACHMENT;
