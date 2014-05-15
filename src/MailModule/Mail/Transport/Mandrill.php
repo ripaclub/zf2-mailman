@@ -45,7 +45,6 @@ class Mandrill implements TransportInterface
     public function send(Mail\Message $message)
     {
         $mandrill = new MandrillClient($this->options->getApikey());
-
         $messageBody = $message->getBody();
         $attachments = [];
         $body = '';
@@ -62,12 +61,13 @@ class Mandrill implements TransportInterface
                     }
                     $parts[] = $part;
                 }
+                $messageBody->setParts(new \ArrayIterator($messageBody->getParts()));
                 $messageBodyCopy->setParts($parts);
                 $attachments = $this->attachmentsFromMessageBody($messageBody);
-                if (count($messageBody->getParts()) > 1) {
-                    $body = $messageBodyCopy->generateMessage();
-                    $bodyText = $message->getBodyText();
-                }
+
+                $body = $messageBodyCopy->generateMessage();
+                $bodyText = $message->getBodyText();
+
 
                 break;
             case is_string($messageBody):
