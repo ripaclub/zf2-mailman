@@ -47,8 +47,6 @@ class Mandrill implements TransportInterface
         $mandrill = new MandrillClient($this->options->getApikey());
         $messageBody = $message->getBody();
         $attachments = [];
-        $body = '';
-        $bodyText = '';
         switch (true) {
             case $messageBody instanceof Message:
                 /** @var \Zend\Mime\Message $messageBodyCopy */
@@ -61,8 +59,16 @@ class Mandrill implements TransportInterface
                     }
                     $parts[] = $part;
                 }
-                $messageBody->setParts(new \ArrayIterator($messageBody->getParts()));
+
                 $messageBodyCopy->setParts($parts);
+
+                $parts = [];
+                foreach ($messageBody->getParts() as $part) {
+                    $parts[] = $part;
+                }
+
+                $messageBody->setParts($parts);
+
                 $attachments = $this->attachmentsFromMessageBody($messageBody);
 
                 $body = $messageBodyCopy->generateMessage();
