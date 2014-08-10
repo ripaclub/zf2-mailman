@@ -2,12 +2,10 @@
 
 namespace MailModule\Mail\Transport;
 
+use Mandrill as MandrillClient;
 use Zend\Mail\Transport\TransportInterface;
 use Zend\Mail;
-use \Mandrill as MandrillClient;
 use Zend\Mime\Message;
-use Zend\Mime\Mime;
-use Zend\Mime\Part;
 
 /**
  * Class Mandrill
@@ -87,7 +85,7 @@ class Mandrill implements TransportInterface
         }
 
 
-        $message = array(
+        $message = [
             'html'        => $body,
             'text'        => $bodyText,
             'subject'     => $message->getSubject(),
@@ -101,7 +99,7 @@ class Mandrill implements TransportInterface
             'headers'     => $message->getHeaders()->toArray(),
             'subaccount'  => $this->options->getSubAccount(),
             'attachments' => $attachments
-        );
+        ];
 
         return $mandrill->messages->send($message);
     }
@@ -117,6 +115,7 @@ class Mandrill implements TransportInterface
     protected function mapAddressListToArray(Mail\AddressList $addresses, $type = 'to')
     {
         $array = [];
+
         /** @var Mail\Address() $address */
         foreach ($addresses as $address) {
             $array[] = [
