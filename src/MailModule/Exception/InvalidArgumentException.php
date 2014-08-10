@@ -7,6 +7,6 @@ namespace MailModule\Exception;
  *
  * @author Lorenzo Fontana <fontanalorenzo@me.com>
  */
-class InvalidArgumentException extends \InvalidArgumentException
+class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
 {
 }

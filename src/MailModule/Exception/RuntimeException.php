@@ -7,6 +7,6 @@ namespace MailModule\Exception;
  *
  * @author Lorenzo Fontana <fontanalorenzo@me.com>
  */
-class RuntimeException extends \RuntimeException
+class RuntimeException extends \RuntimeException implements ExceptionInterface
 {
 }

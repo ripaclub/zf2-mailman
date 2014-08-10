@@ -7,6 +7,6 @@ namespace MailModule\Exception;
  *
  * @author Lorenzo Fontana <fontanalorenzo@me.com>
  */
-class DomainException extends \DomainException
+class DomainException extends \DomainException implements ExceptionInterface
 {
 }
