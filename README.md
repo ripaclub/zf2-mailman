@@ -78,7 +78,7 @@ $mailService = $this->getServiceLocator()->get('MailModule\Gmail');
 $content = new ViewModel();
 $content->setTemplate('email/example.phtml');
 $content->setVariable('name', 'Lorenzo');
-$mailService->getMessage()->setSubject($translator->translate('Example email'));
+$mailService->getMessage()->setSubject('Example email');
 $mailService->setBody($this->getServiceLocator()->get('ViewRenderer')->render($content));
 $mailService->getMessage()->addTo('fontanalorenz@gmail.com', 'Lorenzo');
 $mailService->send();
@@ -86,7 +86,7 @@ $mailService->send();
 
 email/example.phtml
 ```php
-Hi <?=$name;?>,
+<h2>Hi <?=$name;?>,</h2>
 This is an example email with template.
 ```
 
