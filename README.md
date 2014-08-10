@@ -1,4 +1,5 @@
 # ZF2MailModule
+[![Latest Stable Version](https://poser.pugx.org/fntlnz/zf2-mail-module/v/stable.svg)](https://packagist.org/packages/fntlnz/zf2-mail-module)[![Latest Unstable Version](https://poser.pugx.org/fntlnz/zf2-mail-module/v/unstable.svg)](https://packagist.org/packages/fntlnz/zf2-mail-module) [![License](https://poser.pugx.org/fntlnz/zf2-mail-module/license.svg)](https://packagist.org/packages/fntlnz/zf2-mail-module)
 
 ## What is this?
 This is a Zf2 Module that gives you a simple way to configure one or multiple Mail Services.
@@ -133,5 +134,6 @@ To use the Mandrill transport add  `"mandrill/mandrill"` to your composer.json
 ```
 
 
+## License
 
 
