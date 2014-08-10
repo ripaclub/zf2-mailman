@@ -45,7 +45,7 @@ Configure a transport in your configuration file
 ],
 ```
 
-** Text only message **
+**Text only message**
 
 ```php
 /** @var \MailModule\Service\MailService $mailService */
@@ -57,7 +57,7 @@ $mailService->getMessage()->addTo('fontanalorenz@gmail.com', 'Lorenzo');
 $mailService->send();
 ```
 
-** Message with attachment **
+**Message with attachment**
 
 ```php
 /** @var \MailModule\Service\MailService $mailService */
@@ -70,7 +70,7 @@ $mailService->getMessage()->addTo('fontanalorenz@gmail.com', 'Lorenzo');
 $mailService->send();
 ```
 
-** Message using a template **
+**Message using a template**
 
 ```php
 /** @var $mailService \MailModule\Service\MailService */
