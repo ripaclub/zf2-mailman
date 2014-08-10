@@ -29,7 +29,7 @@ class MandrillOptions extends AbstractOptions
      * Ctor
      * @param array $options
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         $this->apikey = isset($options['apikey']) ? (string)$options['apikey'] : null;
         $this->subAccount = isset($options['sub_account']) ? (string)$options['sub_account'] : null;
