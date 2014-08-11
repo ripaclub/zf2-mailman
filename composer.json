@@ -18,7 +18,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*",
-        "mandrill/mandrill": "1.0.*"
+        "mandrill/mandrill": "1.0.*",
+        "zendframework/zendframework": "dev-master"
     },
     "suggest": {
         "mandrill/mandrill": "Allows usage of the Mandrill transport."
