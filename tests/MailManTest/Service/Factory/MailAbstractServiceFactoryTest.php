@@ -80,8 +80,7 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateServiceWithName($config)
     {
-
-        $node = new \ArrayIterator($config['mail_module']);
+        $node = new \ArrayIterator($config['mailman']);
         $this->sm->setService('Config', $config);
 
         $sf = new MailAbstractServiceFactory();
@@ -95,7 +94,7 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
     {
 
         $config = [
-            'mail_module' => [
+            'mailman' => [
                 'anothertathdoesntwork' => [
                     'default_sender' => 'mailmoduletest@thatdoesnotwork.com',
                     'transport'      => [
@@ -106,7 +105,7 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $node = new \ArrayIterator($config['mail_module']);
+        $node = new \ArrayIterator($config['mailman']);
         $this->sm->setService('Config', $config);
 
         $sf = new MailAbstractServiceFactory();
@@ -130,12 +129,12 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 [
-                    'mail_module' => [],
+                    'mailman' => [],
                 ]
             ],
             [
                 [
-                    'mail_module' => [
+                    'mailman' => [
                         'gmail' => [
                             'default_sender' => 'mailmoduletest@gmail.com',
                             'transport'      => [
@@ -157,14 +156,14 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 [
-                    'mail_module' => [
+                    'mailman' => [
                         'another' => [],
                     ],
                 ]
             ],
             [
                 [
-                    'mail_module' => [
+                    'mailman' => [
                         'gmail' => [
                             'default_sender' => 'mailmoduletest@gmail.com',
                         ],
@@ -173,7 +172,7 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 [
-                    'mail_module' => [
+                    'mainman' => [
                         'gmail' => [
                             'default_sender' => 'mailmoduletest@gmail.com',
                             'transport'      => ''
@@ -183,7 +182,7 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 [
-                    'mail_module' => [
+                    'mainman' => [
                         'gmail' => [
                             'default_sender' => 'mailmoduletest@gmail.com',
                             'transport'      => [
@@ -195,7 +194,7 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 [
-                    'mail_module' => [
+                    'mainman' => [
                         'gmail' => [
                             'default_sender' => 'mailmoduletest@gmail.com',
                             'transport'      => [
@@ -221,7 +220,7 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 [
-                    'mail_module' => [
+                    'mailman' => [
                         'gmail' => [
                             'default_sender' => 'mailmoduletest@gmail.com',
                             'transport'      => [
@@ -243,7 +242,7 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 [
-                    'mail_module' => [
+                    'mailman' => [
                         'mandrill' => [
                             'default_sender' => 'mailmoduletest@yourmandrillsendingdomain.com',
                             'transport'      => [

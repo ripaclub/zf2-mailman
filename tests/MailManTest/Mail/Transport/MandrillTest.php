@@ -7,6 +7,7 @@ use MailMan\Mail\Transport\MandrillOptions;
 use MailManTest\TestAsset\ToStringObject;
 use Zend\Mail\Message;
 use Zend\Mime\Part;
+use Zend\Mime\Message as MimeMessage;
 
 /**
  * Class MandrillTest
@@ -44,7 +45,7 @@ class MandrillTest extends \PHPUnit_Framework_TestCase
     public function testSendMime()
     {
         $message = new Message();
-        $mime = new \Zend\Mime\Message();
+        $mime = new MimeMessage();
         $part = new Part('test');
         $mime->addPart($part);
         $message->setBody($mime);

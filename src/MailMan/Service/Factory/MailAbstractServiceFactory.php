@@ -10,12 +10,8 @@ namespace MailMan\Service\Factory;
 
 use MailMan\Exception\RuntimeException;
 use MailMan\Mail\Transport\Factory;
-use MailMan\Mail\Transport\Mandrill;
-use MailMan\Mail\Transport\MandrillOptions;
 use MailMan\Service\MailService;
 use Zend\Mail\Message;
-use Zend\Mail\Transport\Smtp;
-use Zend\Mail\Transport\SmtpOptions;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -29,7 +25,7 @@ class MailAbstractServiceFactory implements AbstractFactoryInterface
      * Config Key
      * @var string
      */
-    protected $configKey = 'mail_module'; // FIXME: config key name
+    protected $configKey = 'mailman';
 
     /**
      * Config
