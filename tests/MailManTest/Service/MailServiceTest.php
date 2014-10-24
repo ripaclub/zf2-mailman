@@ -1,15 +1,19 @@
 <?php
+/**
+ * ZF2 Mail Manager
+ *
+ * @link        https://github.com/ripaclub/zf2-mailman
+ * @copyright   Copyright (c) 2014, RipaClub
+ * @license     http://opensource.org/licenses/BSD-2-Clause Simplified BSD License
+ */
+namespace MailManTest\Service;
 
-namespace MailModuleTest;
-
-use MailModule\Service\MailService;
+use MailMan\Service\MailService;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\Null;
 
 /**
  * Class MailServiceTest
- *
- * @author Lorenzo Fontana <fontanalorenzo@me.com>
  */
 class MailServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,7 +22,6 @@ class MailServiceTest extends \PHPUnit_Framework_TestCase
      * @var MailService
      */
     protected $mailService;
-
 
     protected function setUp()
     {

@@ -1,21 +1,20 @@
-# ZF2MailModule
-[![Build Status](https://travis-ci.org/fntlnz/zf2-mail-module.svg?branch=develop)](https://travis-ci.org/fntlnz/zf2-mail-module) [![Latest Stable Version](https://poser.pugx.org/fntlnz/zf2-mail-module/v/stable.svg)](https://packagist.org/packages/fntlnz/zf2-mail-module) [![Latest Unstable Version](https://poser.pugx.org/fntlnz/zf2-mail-module/v/unstable.svg)](https://packagist.org/packages/fntlnz/zf2-mail-module) [![License](https://poser.pugx.org/fntlnz/zf2-mail-module/license.svg)](https://packagist.org/packages/fntlnz/zf2-mail-module)
+# ZF2 Mail Manager
+[![Build Status](https://travis-ci.org/ripaclub/zf2-mailman.svg?branch=develop)](https://travis-ci.org/ripaclub/zf2-mailman) [![Latest Stable Version](https://poser.pugx.org/ripaclub/zf2-mailman/v/stable.svg)](https://packagist.org/packages/ripaclub/zf2-mailman) [![Latest Unstable Version](https://poser.pugx.org/ripaclub/zf2-mailman/v/unstable.svg)](https://packagist.org/packages/ripaclub/zf2-mailman) [![License](https://poser.pugx.org/ripaclub/zf2-mailman/license.svg)](https://packagist.org/packages/ripaclub/zf2-mailman)
 
 ## What is this?
 This is a Zf2 Module that gives you a simple way to configure one or multiple Mail Services.
 
-It supports [all transports](https://github.com/zendframework/zf2/tree/master/library/Zend/Mail/Transport) shipped with ZF2
-so for instance any transport that implements the `Zend\Mail\Transport\TransportInterface`.
+It supports [all transports](https://github.com/zendframework/zf2/tree/master/library/Zend/Mail/Transport) shipped with ZF2, e.g. any transport that implements the `Zend\Mail\Transport\TransportInterface`.
 
-It also has a transport for [Mandrill](http://mandrill.com)
+It also has a transport for [Mandrill](http://mandrill.com). If you wish to use it install also `mandrill/mandrill` (versions 1.0.*) library.
 
 ## Installation
 
-Add `fntlnz/zf2-mail-module` to your composer.json
+Add `ripaclub/zf2-mailman` to your composer.json
 ```
 {
    "require": {
-       "fntlnz/zf2-mail-module": "v0.1.0"
+       "ripaclub/zf2-mailman": "v0.1.0"
    }
 }
 ```
@@ -24,10 +23,9 @@ Add `fntlnz/zf2-mail-module` to your composer.json
 
 Configure a transport in your configuration file
 
-
 ```php
 'mail_module' => [
-    'MailModule\Gmail' => [
+    'MailMan\Gmail' => [
         'default_sender' => 'my-name-is-methos@gmail.com',
         'transport' => [
             'type' => 'smtp',
@@ -49,8 +47,8 @@ Configure a transport in your configuration file
 **Text only message**
 
 ```php
-/** @var \MailModule\Service\MailService $mailService */
-$mailService = $this->getServiceLocator()->get('MailModule\Gmail');
+/** @var \MailMan\Service\MailService $mailService */
+$mailService = $this->getServiceLocator()->get('MailMan\Gmail');
 $mailService->setBody('Test email');
 $mailService->getMessage()->setSubject('My name is methos');
 $mailService->getMessage()->addFrom('my-name-is-methos@gmail.com', 'Methos');
@@ -61,8 +59,8 @@ $mailService->send();
 **Message with attachment**
 
 ```php
-/** @var \MailModule\Service\MailService $mailService */
-$mailService = $this->getServiceLocator()->get('MailModule\Gmail');
+/** @var \MailMan\Service\MailService $mailService */
+$mailService = $this->getServiceLocator()->get('MailMan\Gmail');
 $mailService->addAttachment('/path/to/an/attachment.png');
 $mailService->setBody('Test email');
 $mailService->getMessage()->setSubject('My name is methos');
@@ -74,8 +72,8 @@ $mailService->send();
 **Message using a template**
 
 ```php
-/** @var $mailService \MailModule\Service\MailService */
-$mailService = $this->getServiceLocator()->get('MailModule\Gmail');
+/** @var $mailService \MailMan\Service\MailService */
+$mailService = $this->getServiceLocator()->get('MailMan\Gmail');
 $content = new ViewModel();
 $content->setTemplate('email/example.phtml');
 $content->setVariable('name', 'Lorenzo');
@@ -97,7 +95,7 @@ This is an example email with template.
 To use the Mandrill transport add  `"mandrill/mandrill"` to your composer.json
 ```php
 'mail_module' => [
-    'MailModule\Mandrill' => [
+    'MailMan\Mandrill' => [
         'default_sender' => 'test@mail.com',
         'transport' => [
             'type' => 'mandrill',
@@ -114,7 +112,7 @@ To use the Mandrill transport add  `"mandrill/mandrill"` to your composer.json
 
 ```php
 'mail_module' => [
-    'MailModule\SMTP' => [
+    'MailMan\SMTP' => [
         'default_sender' => 'my-name-is-methos@gmail.com',
         'transport' => [
             'type' => 'smtp',

@@ -1,16 +1,20 @@
 <?php
-
-namespace MailModule\Mail\Transport;
+/**
+ * ZF2 Mail Manager
+ *
+ * @link        https://github.com/ripaclub/zf2-mailman
+ * @copyright   Copyright (c) 2014, RipaClub
+ * @license     http://opensource.org/licenses/BSD-2-Clause Simplified BSD License
+ */
+namespace MailMan\Mail\Transport;
 
 use Mandrill as MandrillClient;
-use Zend\Mail\Transport\TransportInterface;
 use Zend\Mail;
+use Zend\Mail\Transport\TransportInterface;
 use Zend\Mime\Message;
 
 /**
  * Class Mandrill
- *
- * @author Lorenzo Fontana <fontanalorenzo@me.com>
  */
 class Mandrill implements TransportInterface
 {

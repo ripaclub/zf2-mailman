@@ -11,3 +11,4 @@ vendor
 # Misc
 composer.phar
 .svn
+build/

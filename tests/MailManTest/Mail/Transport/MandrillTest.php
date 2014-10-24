@@ -1,17 +1,15 @@
 <?php
 
-namespace MailModuleTest\Mail\Transport;
+namespace MailManTest\Mail\Transport;
 
-use MailModule\Mail\Transport\Mandrill;
-use MailModule\Mail\Transport\MandrillOptions;
-use MailModuleTest\TestAsset\ToStringObject;
+use MailMan\Mail\Transport\Mandrill;
+use MailMan\Mail\Transport\MandrillOptions;
+use MailManTest\TestAsset\ToStringObject;
 use Zend\Mail\Message;
 use Zend\Mime\Part;
 
 /**
  * Class MandrillTest
- *
- * @author Lorenzo Fontana <fontanalorenzo@me.com>
  */
 class MandrillTest extends \PHPUnit_Framework_TestCase
 {
@@ -70,4 +68,3 @@ class MandrillTest extends \PHPUnit_Framework_TestCase
     }
 
 }
-

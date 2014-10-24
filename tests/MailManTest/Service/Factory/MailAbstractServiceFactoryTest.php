@@ -1,14 +1,17 @@
 <?php
-
-namespace MailModule\Service\Factory;
+/**
+ * ZF2 Mail Manager
+ *
+ * @link        https://github.com/ripaclub/zf2-mailman
+ * @copyright   Copyright (c) 2014, RipaClub
+ * @license     http://opensource.org/licenses/BSD-2-Clause Simplified BSD License
+ */
+namespace MailMan\Service\Factory;
 
 use Zend\ServiceManager\ServiceManager;
 
-
 /**
  * Class MailAbstractServiceFactoryTest
- *
- * @author Lorenzo Fontana <fontanalorenzo@me.com>
  */
 class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -86,7 +89,7 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \MailModule\Exception\RuntimeException
+     * @expectedException \MailMan\Exception\DomainException
      */
     public function testCreateServiceWithNameThrowingException()
     {
@@ -108,7 +111,6 @@ class MailAbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
         $sf = new MailAbstractServiceFactory();
         $sf->createServiceWithName($this->sm, $node->key(), $node->key());
-
     }
 
 

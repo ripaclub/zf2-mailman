@@ -1,11 +1,18 @@
 <?php
+/**
+ * ZF2 Mail Manager
+ *
+ * @link        https://github.com/ripaclub/zf2-mailman
+ * @copyright   Copyright (c) 2014, RipaClub
+ * @license     http://opensource.org/licenses/BSD-2-Clause Simplified BSD License
+ */
+namespace MailMan\Service\Factory;
 
-namespace MailModule\Service\Factory;
-
-use MailModule\Mail\Transport\MandrillOptions;
-use MailModule\Service\MailService;
-use MailModule\Exception\RuntimeException;
-use MailModule\Mail\Transport\Mandrill;
+use MailMan\Exception\RuntimeException;
+use MailMan\Mail\Transport\Factory;
+use MailMan\Mail\Transport\Mandrill;
+use MailMan\Mail\Transport\MandrillOptions;
+use MailMan\Service\MailService;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\Smtp;
 use Zend\Mail\Transport\SmtpOptions;
@@ -14,8 +21,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class MailAbstractServiceFactory
- *
- * @author Lorenzo Fontana <fontanalorenzo@me.com>
  */
 class MailAbstractServiceFactory implements AbstractFactoryInterface
 {
@@ -24,7 +29,7 @@ class MailAbstractServiceFactory implements AbstractFactoryInterface
      * Config Key
      * @var string
      */
-    protected $configKey = 'mail_module';
+    protected $configKey = 'mail_module'; // FIXME: config key name
 
     /**
      * Config
@@ -90,34 +95,11 @@ class MailAbstractServiceFactory implements AbstractFactoryInterface
             $message->setFrom($configNode['default_sender']);
         }
 
-        $transport = null;
-        switch ($configNode['transport']['type']) {
-            case 'smtp':
-                $transport = new Smtp();
-                $smtpOptions = new SmtpOptions($configNode['transport']['options']);
-                $transport->setOptions($smtpOptions);
-                break;
-            case 'mandrill':
-                $transport = new Mandrill();
-                $mandrillOptions = new MandrillOptions($configNode['transport']['options']);
-                $transport->setOptions($mandrillOptions);
-                break;
-        }
-
-        if (!$transport) {
-            throw new RuntimeException(
-                sprintf(
-                    '%s: Provided transport type cannot be created',
-                    __METHOD__
-                )
-            );
-        }
+        $transport = Factory::create($configNode['transport']);
 
         $mailService = new MailService($message, $transport);
         return $mailService;
-
     }
-
 
     /**
      * Get model configuration, if any
@@ -137,9 +119,7 @@ class MailAbstractServiceFactory implements AbstractFactoryInterface
         }
 
         $config = $serviceLocator->get('Config');
-        if (!isset($config[$this->configKey])
-            || !is_array($config[$this->configKey])
-        ) {
+        if (!isset($config[$this->configKey]) || !is_array($config[$this->configKey])) {
             $this->config = [];
             return $this->config;
         }

@@ -1,16 +1,21 @@
 <?php
-
-namespace MailModule\Service;
+/**
+ * ZF2 Mail Manager
+ *
+ * @link        https://github.com/ripaclub/zf2-mailman
+ * @copyright   Copyright (c) 2014, RipaClub
+ * @license     http://opensource.org/licenses/BSD-2-Clause Simplified BSD License
+ */
+namespace MailMan\Service;
 
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
 use Zend\Mime\Mime;
 use Zend\Mime\Part;
+use Zend\Mime\Message as MimeMessage;
 
 /**
  * Class MailService
- *
- * @author Lorenzo Fontana <fontanalorenzo@me.com>
  */
 class MailService
 {
@@ -51,9 +56,9 @@ class MailService
     {
         $body = $this->getMessage()->getBody();
         if (count($this->attachments) > 0) {
-            if (!$body instanceof \Zend\Mime\Message) {
-                $body = new \Zend\Mime\Message();
-                $bodyMessage = new \Zend\Mime\Part($this->getMessage()->getBody());
+            if (!$body instanceof MimeMessage) {
+                $body = new MimeMessage();
+                $bodyMessage = new Part($this->getMessage()->getBody());
                 $bodyMessage->type = Mime::TYPE_HTML;
                 $body->addPart($bodyMessage);
             }
@@ -134,8 +139,8 @@ class MailService
     {
         switch (true) {
             case is_string($body) && preg_match("/<[^<]+>/", $body, $m) != 0:
-                $bodyPart = new \Zend\Mime\Message();
-                $bodyMessage = new \Zend\Mime\Part($body);
+                $bodyPart = new MimeMessage();
+                $bodyMessage = new Part($body);
                 $bodyMessage->type = Mime::TYPE_HTML;
                 $bodyPart->addPart($bodyMessage);
                 $this->message->setBody($bodyPart);
