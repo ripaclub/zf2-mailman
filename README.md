@@ -10,7 +10,8 @@ It also has a transport for [Mandrill](http://mandrill.com). If you wish to use 
 
 ## Installation
 
-Add `ripaclub/zf2-mailman` to your composer.json
+Add `ripaclub/zf2-mailman` to your `composer.json`.
+
 ```
 {
    "require": {
@@ -21,7 +22,7 @@ Add `ripaclub/zf2-mailman` to your composer.json
 
 ## Usage
 
-Configure a transport in your configuration file
+Configure a transport in your configuration file.
 
 ```php
 'mailman' => [
@@ -83,7 +84,8 @@ $mailService->getMessage()->addTo('fontanalorenz@gmail.com', 'Lorenzo');
 $mailService->send();
 ```
 
-email/example.phtml
+The content of `email/example.phtml` file will be:
+
 ```php
 <h2>Hi <?=$name;?>,</h2>
 This is an example email with template.
@@ -92,7 +94,9 @@ This is an example email with template.
 ## Transports configuration examples
 
 ### Mandrill
-To use the Mandrill transport add  `"mandrill/mandrill"` to your composer.json
+
+To use the Mandrill transport add  `"mandrill/mandrill"` to your `composer.json`.
+
 ```php
 'mailman' => [
     'MailMan\Mandrill' => [
@@ -109,6 +113,8 @@ To use the Mandrill transport add  `"mandrill/mandrill"` to your composer.json
 ```
 
 ### SMTP
+
+In this example we use the SMTP transport (shipped by ZF2).
 
 ```php
 'mailman' => [
