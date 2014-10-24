@@ -24,7 +24,7 @@ Add `ripaclub/zf2-mailman` to your composer.json
 Configure a transport in your configuration file
 
 ```php
-'mail_module' => [
+'mailman' => [
     'MailMan\Gmail' => [
         'default_sender' => 'my-name-is-methos@gmail.com',
         'transport' => [
@@ -94,7 +94,7 @@ This is an example email with template.
 ### Mandrill
 To use the Mandrill transport add  `"mandrill/mandrill"` to your composer.json
 ```php
-'mail_module' => [
+'mailman' => [
     'MailMan\Mandrill' => [
         'default_sender' => 'test@mail.com',
         'transport' => [
@@ -111,7 +111,7 @@ To use the Mandrill transport add  `"mandrill/mandrill"` to your composer.json
 ### SMTP
 
 ```php
-'mail_module' => [
+'mailman' => [
     'MailMan\SMTP' => [
         'default_sender' => 'my-name-is-methos@gmail.com',
         'transport' => [
