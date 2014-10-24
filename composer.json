@@ -40,9 +40,9 @@
         "mandrill/mandrill": "Allows usage of the Mandrill transport"
     },
     "autoload": {
-        "psr-0": {
-            "MailMan": "src/",
-            "MailManTest": "src/"
+        "psr-4": {
+            "MailMan\\": "src/",
+            "MailManTest\\": "tests/"
         },
         "classmap": [
             "./Module.php"
