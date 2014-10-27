@@ -20,7 +20,7 @@ class Factory
         'null'      => 'Zend\Mail\Transport\Null',
         'sendmail'  => 'Zend\Mail\Transport\Sendmail',
         'smtp'      => 'Zend\Mail\Transport\Smtp',
-        'mandrill'  => 'MailMan\Transport\Mandrill\MandrillTransport'
+        'mandrill'  => 'MailMan\Transport\Mandrill\Mandrill'
     ];
 
     /**

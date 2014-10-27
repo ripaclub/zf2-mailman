@@ -1,7 +1,7 @@
 <?php
 namespace MailMan\Transport\Mandrill;
 
-use Mandrill;
+use Mandrill as ClientMandrill;
 use Zend\Mime\Message;
 use Zend\Mail;
 use Zend\Mail\Transport\TransportInterface;
@@ -12,7 +12,7 @@ use Zend\Mime\Mime;
  * Class MandrillTransport
  * @package MailMan\Transport\Mandrill
  */
-class MandrillTransport implements TransportInterface
+class Mandrill implements TransportInterface
 {
     protected $mandrillClient = null;
 
@@ -70,7 +70,7 @@ class MandrillTransport implements TransportInterface
     public function getMandrillClient()
     {
         if ($this->mandrillClient) {
-            $this->mandrillClient = new Mandrill($this->options->getApikey());
+            $this->mandrillClient = new ClientMandrill($this->options->getApikey());
         }
         return $this->mandrillClient;
     }
