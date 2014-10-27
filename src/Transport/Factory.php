@@ -1,12 +1,5 @@
 <?php
-/**
- * ZF2 Mail Manager
- *
- * @link        https://github.com/ripaclub/zf2-mailman
- * @copyright   Copyright (c) 2014, RipaClub
- * @license     http://opensource.org/licenses/BSD-2-Clause Simplified BSD License
- */
-namespace MailMan\Mail\Transport;
+namespace MailMan\Transport;
 
 use MailMan\Exception;
 use Zend\Mail\Transport\TransportInterface;
@@ -15,8 +8,9 @@ use Zend\Stdlib\ArrayUtils;
 
 /**
  * Class Factory
+ * @package MailMan\Transport
  */
-abstract class Factory
+class Factory
 {
     /**
      * @var array Known transport types
@@ -112,4 +106,4 @@ abstract class Factory
 
         return $transport;
     }
-}
+} 
