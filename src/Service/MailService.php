@@ -55,7 +55,7 @@ class MailService implements MailInterface
     {
         $body = $message->getBody();
 
-        if (!$body instanceof Mime\Message) {
+        if ($body instanceof Mime\Message) {
             /* @var \Zend\Mime\Message $body */
 
             $headers = $message->getHeaders();
