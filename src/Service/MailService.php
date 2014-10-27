@@ -44,10 +44,6 @@ class MailService implements MailInterface
     public function send(Message $message)
     {
         $message = $this->prepareMessage($message);
-        $message->setFrom('visa');
-        $message->setTo('antonino.visalli@gmail.com');
-        $message->addHtmlPart('<strong>FUNZIONA</strong>>');
-        $message->addTextPart('FUNZIONA');
         return $this->transport->send($message);
     }
 
