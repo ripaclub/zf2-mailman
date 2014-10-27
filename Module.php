@@ -29,8 +29,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
             ],
         ];
     }
-
-
+    
     /**
      * {@inheritdoc}
      */
