@@ -9,7 +9,7 @@ use Zend\Mime\Mime;
 
 
 /**
- * Class MandrillTransport
+ * Class Mandrill
  * @package MailMan\Transport\Mandrill
  */
 class Mandrill implements TransportInterface

@@ -1,7 +1,7 @@
 <?php
 namespace MailMan\Service;
 
-use MailMan\Mail\Transport\Factory;
+use MailMan\Transport\Factory;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
