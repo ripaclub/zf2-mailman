@@ -91,4 +91,16 @@ class Message extends ZendMailMessage implements MessageInterface
         }
         return $this->body;
     }
+
+    /**
+     * @param string $headerName
+     * @param string $headerClass
+     * @return \ArrayIterator|\Zend\Mail\Header\HeaderInterface
+     */
+    public function getHeaderByName($headerName, $headerClass)
+    {
+        return parent::getHeaderByName($headerName, $headerClass);
+    }
+
+
 }
