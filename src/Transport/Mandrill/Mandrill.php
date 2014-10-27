@@ -70,6 +70,8 @@ class Mandrill implements TransportInterface
             'subaccount'  => $this->options->getSubAccount(),
             'attachments' => $attachments
         ];
+
+        return $this->mandrillClient->messages->send($message);
     }
 
     /**
