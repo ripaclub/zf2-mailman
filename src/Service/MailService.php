@@ -22,20 +22,14 @@ class MailService implements MailInterface
     protected $defaultSender = null;
 
     /**
-     * @var string
-     */
-    protected $defaultEncoding = null;
-
-    /**
      * @param TransportInterface $transport
      * @param null $defaultSender
      * @param null $defaultEncoding
      */
-    public function __construct(TransportInterface $transport, $defaultSender = null, $defaultEncoding = null)
+    public function __construct(TransportInterface $transport, $defaultSender = null)
     {
         $this->transport = $transport;
         $this->defaultSender = $defaultSender;
-        $this->defaultEncoding = $defaultEncoding;
     }
 
     /**
@@ -43,10 +37,18 @@ class MailService implements MailInterface
      */
     public function send(Message $message)
     {
-        $message = $this->prepareMessage($message);
+        $this->prepareMessage($message)
+            ->checkFrom($message);
+
         return $this->transport->send($message);
     }
 
+    /**
+     * Prepare header message
+     *
+     * @param Message $message
+     * @return self
+     */
     protected function prepareMessage(Message $message)
     {
         $body = $message->getBody();
@@ -70,6 +72,20 @@ class MailService implements MailInterface
                 $headers->addHeaders($part->getHeadersArray());
             }
         }
-        return $message;
+        return $this;
+    }
+
+    /**
+     * @param Message $message
+     * @return $this
+     */
+    public function checkFrom(Message $message)
+    {
+        if ($this->defaultSender) {
+            if($message->getFrom()->count() == 0) {
+                $message->setFrom($this->defaultSender);
+            }
+        }
+        return $this;
     }
 }
