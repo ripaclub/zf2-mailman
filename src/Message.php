@@ -85,8 +85,9 @@ class Message extends ZendMailMessage implements MessageInterface
 
         if ($this->body instanceof ZendMimeMessage) {
             throw new Exception\RuntimeException(sprintf(
-                    'Body must be an instance of %s',
-                    'Zend\Mime\Message')
+                    'Body must be an instance of %s not %s',
+                    'Zend\Mime\Message',
+                    (is_object($this->body) ? get_class($this->body) : gettype($this->body)))
             );
         }
         return $this->body;
