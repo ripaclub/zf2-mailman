@@ -66,7 +66,6 @@ class MailService implements MailInterface
                 $header = $message->getHeaderByName('content-type', 'Zend\Mail\Header\ContentType');
                 $header->setType('multipart/mixed');
                 $header->addParameter('boundary', $mime->boundary());
-                return $message;
             }
 
             $parts = $body->getParts();
@@ -75,5 +74,6 @@ class MailService implements MailInterface
                 $headers->addHeaders($part->getHeadersArray());
             }
         }
+        return $message;
     }
 }
