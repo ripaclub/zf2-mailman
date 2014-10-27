@@ -5,7 +5,7 @@ use MailMan\Mail\Transport\Factory;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ServiceFactory implements AbstractFactoryInterface
+class ServiceAbstractFactory implements AbstractFactoryInterface
 {
     /**
      * Config Key
