@@ -89,7 +89,7 @@ class Mandrill implements TransportInterface
      */
     public function getMandrillClient()
     {
-        if ($this->mandrillClient) {
+        if (!$this->mandrillClient) {
             $this->mandrillClient = new ClientMandrill($this->options->getApikey());
         }
         return $this->mandrillClient;
