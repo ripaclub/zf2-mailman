@@ -14,7 +14,15 @@ use Zend\Mime\Mime;
  */
 class Mandrill implements TransportInterface
 {
+    /**
+     * @var null|ClientMandrill
+     */
     protected $mandrillClient = null;
+
+    /**
+     * @var MandrillOptions
+     */
+    protected $options = null;
 
     /**
      * Send a mail message
@@ -62,6 +70,16 @@ class Mandrill implements TransportInterface
             'subaccount'  => $this->options->getSubAccount(),
             'attachments' => $attachments
         ];
+    }
+
+    /**
+     * @param MandrillOptions $options
+     * @return self
+     */
+    public function setOptions(MandrillOptions $options)
+    {
+        $this->options = $options;
+        return $this;
     }
 
     /**
