@@ -51,7 +51,7 @@ class Message extends ZendMailMessage implements MessageInterface
         $body = $this->prepareBodyMessage();
 
         $textPart = new Part($content);
-        $textPart->type = Mime::TYPE_HTML;
+        $textPart->type = Mime::TYPE_TEXT;
         $body->addPart($textPart);
 
         return $this;
@@ -66,7 +66,7 @@ class Message extends ZendMailMessage implements MessageInterface
         $body = $this->prepareBodyMessage();
 
         $textPart = new Part($content);
-        $textPart->type = Mime::TYPE_TEXT;
+        $textPart->type = Mime::TYPE_HTML;
         $body->addPart($textPart);
 
         return $this;
