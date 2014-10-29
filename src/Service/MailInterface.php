@@ -13,4 +13,8 @@ interface MailInterface
      * @param Message $message
      */
     public function send(Message $message);
+
+    public function getAdditionalInfo();
+
+    public function setAdditionalInfo(array $additionalInfo);
 }
