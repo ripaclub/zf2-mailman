@@ -1,8 +1,10 @@
 # ZF2 Mail Manager
-[![Build Status](https://travis-ci.org/ripaclub/zf2-mailman.svg?branch=develop)](https://travis-ci.org/ripaclub/zf2-mailman) [![Latest Stable Version](https://poser.pugx.org/ripaclub/zf2-mailman/v/stable.svg)](https://packagist.org/packages/ripaclub/zf2-mailman) [![Latest Unstable Version](https://poser.pugx.org/ripaclub/zf2-mailman/v/unstable.svg)](https://packagist.org/packages/ripaclub/zf2-mailman) [![License](https://poser.pugx.org/ripaclub/zf2-mailman/license.svg)](https://packagist.org/packages/ripaclub/zf2-mailman)
+
+[![Latest Stable Version](https://poser.pugx.org/ripaclub/zf2-mailman/v/stable.svg)](https://packagist.org/packages/ripaclub/zf2-mailman) [![License](https://poser.pugx.org/ripaclub/zf2-mailman/license.svg)](https://packagist.org/packages/ripaclub/zf2-mailman) [![Build Status](https://travis-ci.org/ripaclub/zf2-mailman.svg?branch=develop)](https://travis-ci.org/ripaclub/zf2-mailman) [![Dependency Status](https://www.versioneye.com/user/projects/544efbf49fc4d533e0000173/badge.svg)](https://www.versioneye.com/user/projects/544efbf49fc4d533e0000173)
 
 ## What is this?
-This is a Zf2 Module that gives you a simple way to configure one or multiple Mail Services.
+
+This is a ZF2 Module that gives you a simple way to configure one or multiple mail services.
 
 It supports [all transports](https://github.com/zendframework/zf2/tree/master/library/Zend/Mail/Transport) shipped with ZF2, e.g. any transport that implements the `Zend\Mail\Transport\TransportInterface`.
 
@@ -15,7 +17,7 @@ Add `ripaclub/zf2-mailman` to your `composer.json`.
 ```
 {
    "require": {
-       "ripaclub/zf2-mailman": "v0.1.0"
+       "ripaclub/zf2-mailman": "v0.2.0"
    }
 }
 ```

@@ -86,7 +86,7 @@ class MailService implements MailInterface
     public function checkFrom(Message $message)
     {
         if ($this->defaultSender) {
-            if($message->getFrom()->count() == 0) {
+            if ($message->getFrom()->count() == 0) {
                 $message->setFrom($this->defaultSender);
             }
         }

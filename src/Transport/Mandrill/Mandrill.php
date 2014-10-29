@@ -6,10 +6,11 @@ use Zend\Mime\Message;
 use Zend\Mail;
 use Zend\Mail\Transport\TransportInterface;
 use Zend\Mime\Mime;
-
+use MailMan\Exception;
 
 /**
  * Class Mandrill
+ *
  * @package MailMan\Transport\Mandrill
  */
 class Mandrill implements TransportInterface
@@ -27,19 +28,20 @@ class Mandrill implements TransportInterface
     /**
      * Send a mail message
      *
-     * @param  Mail\Message $message
+     * @param Mail\Message $message
+     * @return array
      */
     public function send(Mail\Message $message)
     {
-        $mandrillClient = $this->getMandrillClient();
+        $this->getMandrillClient();
 
         $body = $message->getBody();
         $attachments = [];
 
         switch (true) {
             case $body instanceof Message:
-                $bodyHtml    = $this->getHtmlPart($body);
-                $bodyText    = $this->getTextPart($body);
+                $bodyHtml = $this->getHtmlPart($body);
+                $bodyText = $this->getTextPart($body);
                 $attachments = $this->getAttachments($body);
                 break;
             case is_string($body):
@@ -51,23 +53,27 @@ class Mandrill implements TransportInterface
                 $bodyText = $message->getBodyText();
                 break;
             default:
-                // TODO exception
+                throw new Exception\InvalidArgumentException(sprintf(
+                    '"%s" expectes a body that is a string, an object or a Zend\Mime\Message; received "%s"',
+                    __METHOD__,
+                    is_object($body) ? get_class($body) : gettype($body)
+                ));
                 break;
         }
 
         $message = [
-            'html'        => $bodyHtml,
-            'text'        => $bodyText,
-            'subject'     => $message->getSubject(),
-            'from_email'  => $message->getFrom()->current()->getEmail(),
-            'from_name'   => $message->getFrom()->current()->getName(),
-            'to'          => array_merge(
+            'html' => $bodyHtml,
+            'text' => $bodyText,
+            'subject' => $message->getSubject(),
+            'from_email' => $message->getFrom()->current()->getEmail(),
+            'from_name' => $message->getFrom()->current()->getName(),
+            'to' => array_merge(
                 $this->mapAddressListToArray($message->getTo(), 'to'),
                 $this->mapAddressListToArray($message->getCc(), 'cc'),
                 $this->mapAddressListToArray($message->getBcc(), 'bcc')
             ),
-            'headers'     => $message->getHeaders()->toArray(),
-            'subaccount'  => $this->options->getSubAccount(),
+            'headers' => $message->getHeaders()->toArray(),
+            'subaccount' => $this->options->getSubAccount(),
             'attachments' => $attachments
         ];
 
@@ -133,7 +139,7 @@ class Mandrill implements TransportInterface
      * @param Message $mimeMessage
      * @return array
      */
-    protected  function getAttachments(Message $mimeMessage)
+    protected function getAttachments(Message $mimeMessage)
     {
         $attachments = [];
         $parts = $mimeMessage->getParts();
@@ -146,8 +152,8 @@ class Mandrill implements TransportInterface
 
             $attachments[] = [
                 'content' => $part->getContent(),
-                'type'    => $part->type,
-                'name'    => $part->filename,
+                'type' => $part->type,
+                'name' => $part->filename,
             ];
         }
         return $attachments;
@@ -157,7 +163,7 @@ class Mandrill implements TransportInterface
      * Map Address List to Mandrill array
      *
      * @param Mail\AddressList $addresses
-     * @param string           $type
+     * @param string $type
      * @return array
      */
     protected function mapAddressListToArray(Mail\AddressList $addresses, $type = 'to')
@@ -167,8 +173,8 @@ class Mandrill implements TransportInterface
         foreach ($addresses as $address) {
             $array[] = [
                 'email' => $address->getEmail(),
-                'name'  => $address->getName(),
-                'type'  => $type
+                'name' => $address->getName(),
+                'type' => $type
             ];
         }
         return $array;

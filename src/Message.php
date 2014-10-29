@@ -7,6 +7,9 @@ use Zend\Mime\Message as ZendMimeMessage;
 use Zend\Mime\Mime;
 use Zend\Mime\Part;
 
+/**
+ * Class Message
+ */
 class Message extends ZendMailMessage implements MessageInterface
 {
     protected $encoding = 'UTF-8';
@@ -20,7 +23,6 @@ class Message extends ZendMailMessage implements MessageInterface
     public function addAttachment($attachment)
     {
         $body = $this->prepareBodyMessage();
-
         $fileInfo = new \finfo(FILEINFO_MIME_TYPE);
 
         if (is_file($attachment) && is_readable($attachment)) {
@@ -32,11 +34,11 @@ class Message extends ZendMailMessage implements MessageInterface
                 $part->disposition = Mime::DISPOSITION_ATTACHMENT;
                 $body->addPart($part);
         } else {
-           throw new Exception\InvalidArgumentException(sprintf(
-               '%s expects a string path; received "%s"',
-               __METHOD__,
-               $attachment)
-           );
+            throw new Exception\InvalidArgumentException(sprintf(
+                '%s expects a string path; received "%s"',
+                __METHOD__,
+                $attachment
+            ));
         }
 
         return $this;
@@ -85,10 +87,10 @@ class Message extends ZendMailMessage implements MessageInterface
 
         if (!$this->body instanceof ZendMimeMessage) {
             throw new Exception\RuntimeException(sprintf(
-                    'Body must be an instance of %s not %s',
-                    'Zend\Mime\Message',
-                    (is_object($this->body) ? get_class($this->body) : gettype($this->body)))
-            );
+                'Body must be an instance of %s not %s',
+                'Zend\Mime\Message',
+                (is_object($this->body) ? get_class($this->body) : gettype($this->body))
+            ));
         }
         return $this->body;
     }
