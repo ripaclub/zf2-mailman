@@ -49,44 +49,8 @@ class MailService implements MailInterface
      */
     public function send(Message $message)
     {
-        $this->prepareMessage($message)
-            ->checkFrom($message);
-
+        $this->checkFrom($message);
         return $this->transport->send($message);
-    }
-
-    /**
-     * Prepare header message
-     *
-     * @param Message $message
-     * @return self
-     */
-    protected function prepareMessage(Message $message)
-    {
-        $body = $message->getBody();
-
-        if ($body instanceof Mime\Message) {
-            /* @var \Zend\Mime\Message $body */
-
-            $headers = $message->getHeaders();
-                // FIXME
-//            $message->getHeaderByName('mime-version', 'Zend\Mail\Header\MimeVersion');
-
-            if ($body->isMultiPart()) {
-                $mime = $body->getMime();
-                // FIXME
-//                $header = $message->getHeaderByName('content-type', 'Zend\Mail\Header\ContentType');
-//                $header->setType('multipart/mixed');
-//                $header->addParameter('boundary', $mime->boundary());
-            }
-
-            $parts = $body->getParts();
-            if (!empty($parts)) {
-                $part = array_shift($parts);
-                $headers->addHeaders($part->getHeadersArray());
-            }
-        }
-        return $this;
     }
 
     /**

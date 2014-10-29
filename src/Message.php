@@ -22,6 +22,26 @@ class Message extends ZendMailMessage implements MessageInterface
     protected $encoding = 'UTF-8';
 
     /**
+     * Set the message body
+     *
+     * @param  null|string|\Zend\Mime\Message|object $body
+     * @throws Exception\InvalidArgumentException
+     * @return Message
+     */
+    public function setBody($body)
+    {
+        if ($this->body instanceof ZendMimeMessage) {
+            $headers = $this->getHeaders();
+            foreach ($headers as $header) {
+                if (strpos(strtolower($header->getFieldName()), 'content') === 0) {
+                    $headers->removeHeader($header);
+                }
+            }
+        }
+        return parent::setBody($body);
+    }
+
+    /**
      * Path of the file to attach
      *
      * @param $attachment string
@@ -48,6 +68,7 @@ class Message extends ZendMailMessage implements MessageInterface
             ));
         }
 
+        $this->setBody($body);
         return $this;
     }
 
@@ -63,6 +84,7 @@ class Message extends ZendMailMessage implements MessageInterface
         $textPart->type = Mime::TYPE_TEXT;
         $body->addPart($textPart);
 
+        $this->setBody($body);
         return $this;
     }
 
@@ -78,9 +100,7 @@ class Message extends ZendMailMessage implements MessageInterface
         $textPart->type = Mime::TYPE_HTML;
         $body->addPart($textPart);
 
-
         $this->setBody($body);
-
         return $this;
     }
 
@@ -103,15 +123,5 @@ class Message extends ZendMailMessage implements MessageInterface
             ));
         }
         return $this->body;
-    }
-
-    /**
-     * @param string $headerName
-     * @param string $headerClass
-     * @return \ArrayIterator|\Zend\Mail\Header\HeaderInterface
-     */
-    public function getHeaderByName($headerName, $headerClass)
-    {
-        return parent::getHeaderByName($headerName, $headerClass);
     }
 }
