@@ -60,11 +60,13 @@ class Mandrill implements TransportInterface
                 $bodyText = $message->getBodyText();
                 break;
             default:
-                throw new Exception\InvalidArgumentException(sprintf(
-                    '"%s" expectes a body that is a string, an object or a Zend\Mime\Message; received "%s"',
-                    __METHOD__,
-                    is_object($body) ? get_class($body) : gettype($body)
-                ));
+                throw new Exception\InvalidArgumentException(
+                    sprintf(
+                        '"%s" expectes a body that is a string, an object or a Zend\Mime\Message; received "%s"',
+                        __METHOD__,
+                        is_object($body) ? get_class($body) : gettype($body)
+                    )
+                );
                 break;
         }
 

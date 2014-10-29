@@ -1,4 +1,11 @@
 <?php
+/**
+ * ZF2 Mail Manager
+ *
+ * @link        https://github.com/ripaclub/zf2-mailman
+ * @copyright   Copyright (c) 2014, RipaClub
+ * @license     http://opensource.org/licenses/BSD-2-Clause Simplified BSD License
+ */
 namespace MailMan;
 
 use MailMan\Exception;
@@ -26,13 +33,13 @@ class Message extends ZendMailMessage implements MessageInterface
         $fileInfo = new \finfo(FILEINFO_MIME_TYPE);
 
         if (is_file($attachment) && is_readable($attachment)) {
-                $pathInfo = pathinfo($attachment);
-                $part = new Part(fopen($attachment, 'r'));
-                $part->filename = $pathInfo['basename'];
-                $part->type = $fileInfo->file($attachment);
-                $part->encoding = Mime::ENCODING_BASE64;
-                $part->disposition = Mime::DISPOSITION_ATTACHMENT;
-                $body->addPart($part);
+            $pathInfo = pathinfo($attachment);
+            $part = new Part(fopen($attachment, 'r'));
+            $part->filename = $pathInfo['basename'];
+            $part->type = $fileInfo->file($attachment);
+            $part->encoding = Mime::ENCODING_BASE64;
+            $part->disposition = Mime::DISPOSITION_ATTACHMENT;
+            $body->addPart($part);
         } else {
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects a string path; received "%s"',
@@ -70,6 +77,9 @@ class Message extends ZendMailMessage implements MessageInterface
         $textPart = new Part($content);
         $textPart->type = Mime::TYPE_HTML;
         $body->addPart($textPart);
+
+
+        $this->setBody($body);
 
         return $this;
     }

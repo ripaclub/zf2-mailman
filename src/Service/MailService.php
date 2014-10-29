@@ -14,6 +14,7 @@ use Zend\Mime;
 
 /**
  * Class MailService
+ *
  * @package MailMan\Service
  */
 class MailService implements MailInterface
@@ -68,13 +69,15 @@ class MailService implements MailInterface
             /* @var \Zend\Mime\Message $body */
 
             $headers = $message->getHeaders();
-            $message->getHeaderByName('mime-version', 'Zend\Mail\Header\MimeVersion');
+                // FIXME
+//            $message->getHeaderByName('mime-version', 'Zend\Mail\Header\MimeVersion');
 
             if ($body->isMultiPart()) {
-                $mime   = $body->getMime();
-                $header = $message->getHeaderByName('content-type', 'Zend\Mail\Header\ContentType');
-                $header->setType('multipart/mixed');
-                $header->addParameter('boundary', $mime->boundary());
+                $mime = $body->getMime();
+                // FIXME
+//                $header = $message->getHeaderByName('content-type', 'Zend\Mail\Header\ContentType');
+//                $header->setType('multipart/mixed');
+//                $header->addParameter('boundary', $mime->boundary());
             }
 
             $parts = $body->getParts();

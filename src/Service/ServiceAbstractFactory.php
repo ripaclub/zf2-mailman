@@ -19,12 +19,14 @@ class ServiceAbstractFactory implements AbstractFactoryInterface
 {
     /**
      * Config Key
+     *
      * @var string
      */
     protected $configKey = 'mailman';
 
     /**
      * Config
+     *
      * @var array
      */
     protected $config;
@@ -45,7 +47,7 @@ class ServiceAbstractFactory implements AbstractFactoryInterface
             return false;
         }
 
-        $serviceConfig   = $this->checkHasRequestedNameConfig($config, $requestedName);
+        $serviceConfig = $this->checkHasRequestedNameConfig($config, $requestedName);
         $transportConfig = $this->checkHasTransportConfig($config, $requestedName, $serviceLocator);
 
         return (
@@ -111,10 +113,7 @@ class ServiceAbstractFactory implements AbstractFactoryInterface
      */
     public function checkHasRequestedNameConfig($config, $requestedName)
     {
-        if (isset($config[$requestedName])
-            && is_array($config[$requestedName])
-            && !empty($config[$requestedName])
-        ) {
+        if (isset($config[$requestedName]) && is_array($config[$requestedName]) && !empty($config[$requestedName])) {
             return true;
         }
         return false;

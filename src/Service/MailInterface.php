@@ -12,6 +12,7 @@ use MailMan\Message;
 
 /**
  * Interface MailInterface
+ *
  * @package MailMan\Service
  */
 interface MailInterface
