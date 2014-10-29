@@ -57,10 +57,13 @@ class ServiceAbstractFactory implements AbstractFactoryInterface
     {
         $config = $this->getConfig($serviceLocator)[$requestedName];
 
-        $defaultSender = isset($config['defaultSender']) ? $config['defaultSender'] : null;
+        $defaultSender = isset($config['default_sender']) ? $config['default_sender'] : null;
         $transport = Factory::create($config['transport']);
 
-        return new MailService($transport, $defaultSender);
+        $serviceClient = new MailService($transport, $defaultSender);
+        $serviceClient->setAdditionalInfo(isset($config['additional_info']) ? $config['additional_info'] : []);
+
+        return $serviceClient;
     }
 
     /**

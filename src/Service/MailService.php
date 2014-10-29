@@ -22,9 +22,13 @@ class MailService implements MailInterface
     protected $defaultSender = null;
 
     /**
+     * @var array
+     */
+    protected $additionalInfo = [];
+
+    /**
      * @param TransportInterface $transport
      * @param null $defaultSender
-     * @param null $defaultEncoding
      */
     public function __construct(TransportInterface $transport, $defaultSender = null)
     {
@@ -88,4 +92,24 @@ class MailService implements MailInterface
         }
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function getAdditionalInfo()
+    {
+        return $this->additionalInfo;
+    }
+
+    /**
+     * @param array $additionalInfo
+     * @return self
+     */
+    public function setAdditionalInfo(array $additionalInfo)
+    {
+        $this->additionalInfo = $additionalInfo;
+        return $this;
+    }
+
+
 }
