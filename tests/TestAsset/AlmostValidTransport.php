@@ -13,6 +13,8 @@ use Zend\Mail\Message;
 
 /**
  * Class AlmostValidTransport
+ *
+ * Needs a @code{setOptions(AlmostValidTransportOptions $options)} method to be a formally valid transport.
  */
 class AlmostValidTransport implements TransportInterface
 {

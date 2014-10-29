@@ -1,6 +1,9 @@
 <?php
 namespace MailMan;
 
+/**
+ * Interface MessageInterface
+ */
 interface MessageInterface
 {
     /**

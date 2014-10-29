@@ -1,10 +1,20 @@
 <?php
+/**
+ * ZF2 Mail Manager
+ *
+ * @link        https://github.com/ripaclub/zf2-mailman
+ * @copyright   Copyright (c) 2014, RipaClub
+ * @license     http://opensource.org/licenses/BSD-2-Clause Simplified BSD License
+ */
 namespace MailMan\Service;
 
 use MailMan\Transport\Factory;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Class ServiceAbstractFactory
+ */
 class ServiceAbstractFactory implements AbstractFactoryInterface
 {
     /**
@@ -42,7 +52,6 @@ class ServiceAbstractFactory implements AbstractFactoryInterface
             $serviceConfig
             && $transportConfig
         );
-
     }
 
     /**
@@ -131,5 +140,4 @@ class ServiceAbstractFactory implements AbstractFactoryInterface
         }
         return false;
     }
-
 }

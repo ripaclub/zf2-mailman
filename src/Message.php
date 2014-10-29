@@ -104,6 +104,4 @@ class Message extends ZendMailMessage implements MessageInterface
     {
         return parent::getHeaderByName($headerName, $headerClass);
     }
-
-
 }
