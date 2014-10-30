@@ -1,6 +1,6 @@
 # ZF2 Mail Manager
 
-[![Latest Stable Version](https://poser.pugx.org/ripaclub/zf2-mailman/v/stable.svg)](https://packagist.org/packages/ripaclub/zf2-mailman) [![License](https://poser.pugx.org/ripaclub/zf2-mailman/license.svg)](https://packagist.org/packages/ripaclub/zf2-mailman) [![Build Status](https://travis-ci.org/ripaclub/zf2-mailman.svg?branch=develop)](https://travis-ci.org/ripaclub/zf2-mailman) [![Dependency Status](https://www.versioneye.com/user/projects/544efbf49fc4d533e0000173/badge.svg)](https://www.versioneye.com/user/projects/544efbf49fc4d533e0000173)
+[![Latest Stable Version](https://poser.pugx.org/ripaclub/zf2-mailman/v/stable.svg)](https://packagist.org/packages/ripaclub/zf2-mailman) [![License](https://poser.pugx.org/ripaclub/zf2-mailman/license.svg)](https://packagist.org/packages/ripaclub/zf2-mailman) [![Build Status](https://travis-ci.org/ripaclub/zf2-mailman.svg?branch=master)](https://travis-ci.org/ripaclub/zf2-mailman) [![Coverage Status](https://coveralls.io/repos/ripaclub/zf2-mailman/badge.png?branch=master)](https://coveralls.io/r/ripaclub/zf2-mailman?branch=master) [![Dependency Status](https://www.versioneye.com/user/projects/544efbf49fc4d533e0000173/badge.svg)](https://www.versioneye.com/user/projects/544efbf49fc4d533e0000173)
 
 ## What is this?
 
