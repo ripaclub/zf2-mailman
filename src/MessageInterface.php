@@ -14,18 +14,24 @@ namespace MailMan;
 interface MessageInterface
 {
     /**
+     * Path of the file to attach to the message
+     *
      * @param $attachment
      * @return self
      */
     public function addAttachment($attachment);
 
     /**
+     * Text content to add to the message
+     *
      * @param $content string
      * @return self
      */
     public function addTextPart($content);
 
     /**
+     * Content to add as HTML part to the message
+     *
      * @param $content string
      * @return self
      */
