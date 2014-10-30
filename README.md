@@ -1,8 +1,10 @@
 # ZF2 Mail Manager
-[![Build Status](https://travis-ci.org/ripaclub/zf2-mailman.svg?branch=develop)](https://travis-ci.org/ripaclub/zf2-mailman) [![Latest Stable Version](https://poser.pugx.org/ripaclub/zf2-mailman/v/stable.svg)](https://packagist.org/packages/ripaclub/zf2-mailman) [![Latest Unstable Version](https://poser.pugx.org/ripaclub/zf2-mailman/v/unstable.svg)](https://packagist.org/packages/ripaclub/zf2-mailman) [![License](https://poser.pugx.org/ripaclub/zf2-mailman/license.svg)](https://packagist.org/packages/ripaclub/zf2-mailman)
+
+[![Latest Stable Version](https://poser.pugx.org/ripaclub/zf2-mailman/v/stable.svg)](https://packagist.org/packages/ripaclub/zf2-mailman) [![License](https://poser.pugx.org/ripaclub/zf2-mailman/license.svg)](https://packagist.org/packages/ripaclub/zf2-mailman) [![Build Status](https://travis-ci.org/ripaclub/zf2-mailman.svg?branch=develop)](https://travis-ci.org/ripaclub/zf2-mailman) [![Dependency Status](https://www.versioneye.com/user/projects/544efbf49fc4d533e0000173/badge.svg)](https://www.versioneye.com/user/projects/544efbf49fc4d533e0000173)
 
 ## What is this?
-This is a Zf2 Module that gives you a simple way to configure one or multiple Mail Services.
+
+This is a ZF2 Module that gives you a simple way to configure one or multiple mail services.
 
 It supports [all transports](https://github.com/zendframework/zf2/tree/master/library/Zend/Mail/Transport) shipped with ZF2, e.g. any transport that implements the `Zend\Mail\Transport\TransportInterface`.
 
@@ -15,7 +17,7 @@ Add `ripaclub/zf2-mailman` to your `composer.json`.
 ```
 {
    "require": {
-       "ripaclub/zf2-mailman": "v0.1.0"
+       "ripaclub/zf2-mailman": "v0.2.0"
    }
 }
 ```
@@ -35,7 +37,7 @@ Configure a transport in your configuration file.
                  'port' => '587',
                  'connection_class' => 'login',
                  'connection_config' => [
-                     'ssl'     => 'tls',
+                     'ssl' => 'tls',
                      'username' => 'my-name-is-methos@gmail.com',
                      'password' => 'MYSECRETPASSWORD',
                  ]
@@ -47,47 +49,54 @@ Configure a transport in your configuration file.
 
 **Text only message**
 
+Then we send a text only message.
+
 ```php
+$message = new MailMan\Message();
+$message->addTextPart('Test email');
+$message->setSubject('My name is methos');
+$message->addFrom('my-name-is-methos@gmail.com', 'Methos');
+$message->addTo('ripaclub@gmail.com', 'RipaClub');
 /** @var \MailMan\Service\MailService $mailService */
 $mailService = $this->getServiceLocator()->get('MailMan\Gmail');
-$mailService->setBody('Test email');
-$mailService->getMessage()->setSubject('My name is methos');
-$mailService->getMessage()->addFrom('my-name-is-methos@gmail.com', 'Methos');
-$mailService->getMessage()->addTo('fontanalorenz@gmail.com', 'Lorenzo');
-$mailService->send();
+$mailService->send($message);
 ```
 
 **Message with attachment**
 
+Do you want to send an email message with an attachment from filesystem?
+
 ```php
+$message = new MailMan\Message();
+$message->addAttachment('/path/to/an/attachment.png');
+$message->setBody('Test email');
+$message->setSubject('My name is methos');
+$message->addFrom('my-name-is-methos@gmail.com', 'Methos');
+$message->addTo('ripaclub@gmail.com', 'RipaClub');
 /** @var \MailMan\Service\MailService $mailService */
 $mailService = $this->getServiceLocator()->get('MailMan\Gmail');
-$mailService->addAttachment('/path/to/an/attachment.png');
-$mailService->setBody('Test email');
-$mailService->getMessage()->setSubject('My name is methos');
-$mailService->getMessage()->addFrom('my-name-is-methos@gmail.com', 'Methos');
-$mailService->getMessage()->addTo('fontanalorenz@gmail.com', 'Lorenzo');
-$mailService->send();
+$mailService->send($message);
 ```
 
 **Message using a template**
 
 ```php
-/** @var $mailService \MailMan\Service\MailService */
-$mailService = $this->getServiceLocator()->get('MailMan\Gmail');
 $content = new ViewModel();
 $content->setTemplate('email/example.phtml');
-$content->setVariable('name', 'Lorenzo');
-$mailService->getMessage()->setSubject('Example email');
-$mailService->setBody($this->getServiceLocator()->get('ViewRenderer')->render($content));
-$mailService->getMessage()->addTo('fontanalorenz@gmail.com', 'Lorenzo');
-$mailService->send();
+$content->setVariable('name', 'RipaClub');
+$message = new MailMan\Message();
+$message->setSubject('Example email');
+$message->addHtmlPart($this->getServiceLocator()->get('ViewRenderer')->render($content));
+$message->addTo('ripaclbu@gmail.com', 'RipaClub');
+/** @var $mailService \MailMan\Service\MailService */
+$mailService = $this->getServiceLocator()->get('MailMan\Gmail');
+$mailService->send($message);
 ```
 
 The content of `email/example.phtml` file will be:
 
 ```php
-<h2>Hi <?=$name;?>,</h2>
+<h2>Hi <?= $name; ?>,</h2>
 This is an example email with template.
 ```
 
@@ -95,7 +104,9 @@ This is an example email with template.
 
 ### Mandrill
 
-To use the Mandrill transport add  `"mandrill/mandrill"` to your `composer.json`.
+To use the Mandrill transport add `"mandrill/mandrill"` to your `composer.json`.
+
+Then configure it.
 
 ```php
 'mailman' => [
@@ -104,7 +115,7 @@ To use the Mandrill transport add  `"mandrill/mandrill"` to your `composer.json`
         'transport' => [
             'type' => 'mandrill',
             'options' => [
-                'apikey' => 'MYSECRETMANDRILLKEY',
+                'api_key' => 'MYSECRETMANDRILLKEY',
                 'sub_account' => 'my-optional-subaccount-if-any'
             ],
         ],
@@ -127,7 +138,7 @@ In this example we use the SMTP transport (shipped by ZF2).
                  'port' => '587',
                  'connection_class' => 'login',
                  'connection_config' => [
-                     'ssl'     => 'tls',
+                     'ssl' => 'tls',
                      'username' => 'my-name-is-methos@gmail.com',
                      'password' => 'MYSECRETPASSWORD',
                  ]

@@ -1,12 +1,20 @@
 <?php
+/**
+ * ZF2 Mail Manager
+ *
+ * @link        https://github.com/ripaclub/zf2-mailman
+ * @copyright   Copyright (c) 2014, RipaClub
+ * @license     http://opensource.org/licenses/BSD-2-Clause Simplified BSD License
+ */
 namespace MailMan\Service;
 
 use MailMan\Message;
-use Zend\Mime;
 use Zend\Mail\Transport\TransportInterface;
+use Zend\Mime;
 
 /**
  * Class MailService
+ *
  * @package MailMan\Service
  */
 class MailService implements MailInterface
@@ -22,9 +30,13 @@ class MailService implements MailInterface
     protected $defaultSender = null;
 
     /**
+     * @var array
+     */
+    protected $additionalInfo = [];
+
+    /**
      * @param TransportInterface $transport
      * @param null $defaultSender
-     * @param null $defaultEncoding
      */
     public function __construct(TransportInterface $transport, $defaultSender = null)
     {
@@ -37,55 +49,39 @@ class MailService implements MailInterface
      */
     public function send(Message $message)
     {
-        $this->prepareMessage($message)
-            ->checkFrom($message);
-
+        $this->checkFrom($message);
         return $this->transport->send($message);
-    }
-
-    /**
-     * Prepare header message
-     *
-     * @param Message $message
-     * @return self
-     */
-    protected function prepareMessage(Message $message)
-    {
-        $body = $message->getBody();
-
-        if ($body instanceof Mime\Message) {
-            /* @var \Zend\Mime\Message $body */
-
-            $headers = $message->getHeaders();
-            $message->getHeaderByName('mime-version', 'Zend\Mail\Header\MimeVersion');
-
-            if ($body->isMultiPart()) {
-                $mime   = $body->getMime();
-                $header = $message->getHeaderByName('content-type', 'Zend\Mail\Header\ContentType');
-                $header->setType('multipart/mixed');
-                $header->addParameter('boundary', $mime->boundary());
-            }
-
-            $parts = $body->getParts();
-            if (!empty($parts)) {
-                $part = array_shift($parts);
-                $headers->addHeaders($part->getHeadersArray());
-            }
-        }
-        return $this;
     }
 
     /**
      * @param Message $message
      * @return $this
      */
-    public function checkFrom(Message $message)
+    protected function checkFrom(Message $message)
     {
         if ($this->defaultSender) {
-            if($message->getFrom()->count() == 0) {
+            if ($message->getFrom()->count() == 0) {
                 $message->setFrom($this->defaultSender);
             }
         }
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAdditionalInfo()
+    {
+        return $this->additionalInfo;
+    }
+
+    /**
+     * @param array $additionalInfo
+     * @return self
+     */
+    public function setAdditionalInfo(array $additionalInfo)
+    {
+        $this->additionalInfo = $additionalInfo;
         return $this;
     }
 }

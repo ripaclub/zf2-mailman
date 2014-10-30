@@ -1,20 +1,32 @@
 <?php
+/**
+ * ZF2 Mail Manager
+ *
+ * @link        https://github.com/ripaclub/zf2-mailman
+ * @copyright   Copyright (c) 2014, RipaClub
+ * @license     http://opensource.org/licenses/BSD-2-Clause Simplified BSD License
+ */
 namespace MailMan\Service;
 
 use MailMan\Transport\Factory;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Class ServiceAbstractFactory
+ */
 class ServiceAbstractFactory implements AbstractFactoryInterface
 {
     /**
      * Config Key
+     *
      * @var string
      */
     protected $configKey = 'mailman';
 
     /**
      * Config
+     *
      * @var array
      */
     protected $config;
@@ -35,14 +47,10 @@ class ServiceAbstractFactory implements AbstractFactoryInterface
             return false;
         }
 
-        $serviceConfig   = $this->checkHasRequestedNameConfig($config, $requestedName);
+        $serviceConfig = $this->checkHasRequestedNameConfig($config, $requestedName);
         $transportConfig = $this->checkHasTransportConfig($config, $requestedName, $serviceLocator);
 
-        return (
-            $serviceConfig
-            && $transportConfig
-        );
-
+        return $serviceConfig && $transportConfig;
     }
 
     /**
@@ -57,10 +65,13 @@ class ServiceAbstractFactory implements AbstractFactoryInterface
     {
         $config = $this->getConfig($serviceLocator)[$requestedName];
 
-        $defaultSender = isset($config['defaultSender']) ? $config['defaultSender'] : null;
+        $defaultSender = isset($config['default_sender']) ? $config['default_sender'] : null;
         $transport = Factory::create($config['transport']);
 
-        return new MailService($transport, $defaultSender);
+        $serviceClient = new MailService($transport, $defaultSender);
+        $serviceClient->setAdditionalInfo(isset($config['additional_info']) ? $config['additional_info'] : []);
+
+        return $serviceClient;
     }
 
     /**
@@ -97,12 +108,9 @@ class ServiceAbstractFactory implements AbstractFactoryInterface
      * @param $requestedName
      * @return bool
      */
-    public function checkHasRequestedNameConfig($config, $requestedName)
+    protected function checkHasRequestedNameConfig($config, $requestedName)
     {
-        if (isset($config[$requestedName])
-            && is_array($config[$requestedName])
-            && !empty($config[$requestedName])
-        ) {
+        if (isset($config[$requestedName]) && is_array($config[$requestedName]) && !empty($config[$requestedName])) {
             return true;
         }
         return false;
@@ -115,7 +123,7 @@ class ServiceAbstractFactory implements AbstractFactoryInterface
      * @param $requestedName
      * @return bool
      */
-    public function checkHasTransportConfig($config, $requestedName, ServiceLocatorInterface $serviceLocator)
+    protected function checkHasTransportConfig($config, $requestedName)
     {
         if (isset($config[$requestedName]['transport'])
             && is_array($config[$requestedName]['transport'])
@@ -128,5 +136,4 @@ class ServiceAbstractFactory implements AbstractFactoryInterface
         }
         return false;
     }
-
 }

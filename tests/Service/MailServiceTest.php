@@ -8,95 +8,56 @@
  */
 namespace MailManTest\Service;
 
+use MailMan\Message as MailManMessage;
+use MailMan\Service\MailInterface;
 use MailMan\Service\MailService;
-use Zend\Mail\Message;
-use Zend\Mail\Transport\Null;
-use Zend\Mime\Part;
-use Zend\Mime\Message as MimeMessage;
+use Zend\Mail\Transport\TransportInterface;
 
 /**
  * Class MailServiceTest
  */
 class MailServiceTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $transportMock;
 
     /**
-     * @var MailService
+     * @var MailInterface
      */
     protected $mailService;
 
-    protected function setUp()
+    public function setUp()
     {
-        $message = new Message();
-        $message->setFrom('from@someone.tld');
-
-        $transport = new Null();
-
-        $mailService = new MailService($message, $transport);
-        $message = $mailService->getMessage();
-        $message->addTo('to@someone.tld');
-        $message->addBcc('hidden@someone.tld');
-        $message->addCc('copy@someone.tld');
-
-        $this->mailService = $mailService;
+        $this->transportMock = $this->getMockBuilder('Zend\Mail\Transport\TransportInterface')
+                                    ->setMethods(['send'])
+                                    ->getMockForAbstractClass();
+        /** @var $transport TransportInterface */
+        $transport = $this->transportMock;
+        $this->mailService = new MailService($transport, 'default@mail.com');
     }
 
-    public function testGetMessage()
+    public function testConstructor()
     {
-        $this->assertInstanceOf('\Zend\Mail\Message', $this->mailService->getMessage());
-    }
-
-    public function testSetAttachments()
-    {
-        $attachments = ['/first/path', '/second/path', '/third/path'];
-        $this->mailService->setAttachments($attachments);
-        $this->assertEquals($this->mailService->getAttachments(), $attachments);
-    }
-
-    public function testAddAttachment()
-    {
-        $attachment = '/my/attachment/path';
-        $this->mailService->addAttachment($attachment);
-        $this->assertEquals($this->mailService->getAttachments(), [$attachment]);
-    }
-
-    public function testSetBodyHtml()
-    {
-        $body = <<<HTML
-<h1>This is the mail body</h1>
-Woooooooooooooooooooohoooooooo
-HTML;
-        $this->mailService->setBody($body);
-
-        /** @var MimeMessage $body */
-        $body = $this->mailService->getMessage()->getBody();
-
-        $this->assertInstanceOf('\Zend\Mime\Message', $body);
-        $this->assertCount(1, $body->getParts());
-    }
-
-    public function testSetBody()
-    {
-        $bodyPart = new MimeMessage();
-        $bodyMessage1 = new Part('first part');
-        $bodyMessage1->type = 'text/html';
-
-        $bodyMessage2 = new Part('second part');
-        $bodyMessage2->type = 'text/html';
-
-        $bodyPart->setParts([$bodyMessage1, $bodyMessage2]);
-
-        $this->mailService->setBody($bodyPart);
-
-        /** @var MimeMessage $body */
-        $body = $this->mailService->getMessage()->getBody();
-
-        $this->assertInstanceOf('\Zend\Mime\Message', $body);
-        $this->assertCount(2, $body->getParts());
+        $this->assertInstanceOf('MailMan\Service\MailService', $this->mailService);
     }
 
     public function testSend()
     {
-        $this->assertNull($this->mailService->send());
+        $mex = new MailManMessage();
+
+        $this->transportMock->expects($this->at(0))
+                            ->method('send')
+                            ->with($this->equalTo($mex));
+
+        $this->mailService->send($mex);
+    }
+
+    public function testSettingAndGettingAdditionalInfo()
+    {
+        $input = ['additional' => 'info'];
+        $this->mailService->setAdditionalInfo($input);
+        $this->assertEquals($input, $this->mailService->getAdditionalInfo());
     }
 }

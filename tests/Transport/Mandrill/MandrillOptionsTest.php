@@ -6,16 +6,15 @@
  * @copyright   Copyright (c) 2014, RipaClub
  * @license     http://opensource.org/licenses/BSD-2-Clause Simplified BSD License
  */
-namespace MailManTest\Mail\Transport;
+namespace MailManTest\Transport\Mandrill;
 
-use MailMan\Mail\Transport\MandrillOptions;
+use MailMan\Transport\Mandrill\MandrillOptions;
 
 /**
  * Class MandrillOptionsTest
  */
 class MandrillOptionsTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var MandrillOptions
      */
@@ -24,7 +23,7 @@ class MandrillOptionsTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $config = [
-            'apikey'      => 'MYSECRETMANDRILLKEY',
+            'api_key' => 'MYSECRETMANDRILLKEY',
             'sub_account' => 'my-optional-subaccount-if-any'
         ];
         $this->mandrillOptions = new MandrillOptions($config);

@@ -15,12 +15,19 @@ class ToStringObject
 {
     protected $array;
 
+    /**
+     * @param $element
+     * @return $this
+     */
     public function addElement($element)
     {
         $this->array[] = $element;
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return implode(' ', $this->array);

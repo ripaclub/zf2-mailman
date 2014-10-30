@@ -1,12 +1,19 @@
 <?php
+/**
+ * ZF2 Mail Manager
+ *
+ * @link        https://github.com/ripaclub/zf2-mailman
+ * @copyright   Copyright (c) 2014, RipaClub
+ * @license     http://opensource.org/licenses/BSD-2-Clause Simplified BSD License
+ */
+namespace MailManTest\Transport\Mandrill;
 
-namespace MailManTest\Mail\Transport;
-
-use MailMan\Mail\Transport\Mandrill;
-use MailMan\Mail\Transport\MandrillOptions;
+use MailMan\Transport\Mandrill\Mandrill;
+use MailMan\Transport\Mandrill\MandrillOptions;
 use MailManTest\TestAsset\ToStringObject;
 use Zend\Mail\Message;
 use Zend\Mime\Part;
+use Zend\Mime\Mime;
 use Zend\Mime\Message as MimeMessage;
 
 /**
@@ -31,7 +38,7 @@ class MandrillTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Mandrill_Invalid_Key
      */
-    public function testSend()
+    public function testSendWithStringBody()
     {
         $message = new Message();
         $message->setBody('test');
@@ -42,22 +49,39 @@ class MandrillTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Mandrill_Invalid_Key
      */
-    public function testSendMime()
+    public function testSendMultipart()
     {
         $message = new Message();
         $mime = new MimeMessage();
-        $part = new Part('test');
-        $mime->addPart($part);
+        $part1 = new Part('one');
+        $part1->type = Mime::TYPE_HTML;
+
+        $part2 = new Part('two');
+        $part2->type = Mime::TYPE_TEXT;
+
+        $fileInfo = new \finfo(FILEINFO_MIME_TYPE);
+        $attachment = __DIR__ . DIRECTORY_SEPARATOR . 'MandrillTest.php';
+        $part3 = new Part(fopen($attachment, 'r'));
+        $part3->filename = pathinfo($attachment)['basename'];
+        $part3->type = $fileInfo->file($attachment);
+        $part3->encoding = Mime::ENCODING_BASE64;
+        $part3->disposition = Mime::DISPOSITION_ATTACHMENT;
+
+        $mime->addPart($part1);
+        $mime->addPart($part2);
+        $mime->addPart($part3);
+
         $message->setBody($mime);
         $message->setFrom('test@mandrilltransport.tld');
         $message->addTo('me@mandrillmegatest.tld');
+
         $this->mandrill->send($message);
     }
 
     /**
      * @expectedException \Mandrill_Invalid_Key
      */
-    public function testSendAnotherObject()
+    public function testSendObject()
     {
         $message = new Message();
         $body = new ToStringObject();
@@ -68,4 +92,12 @@ class MandrillTest extends \PHPUnit_Framework_TestCase
         $this->mandrill->send($message);
     }
 
+    /**
+     * @expectedException \MailMan\Exception\InvalidArgumentException
+     */
+    public function testSendMailWithoutBodyShouldThrowException()
+    {
+        $message = new Message();
+        $this->mandrill->send($message);
+    }
 }
