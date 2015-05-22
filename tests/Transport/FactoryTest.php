@@ -26,11 +26,6 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $this->factory = new Factory();
     }
 
-    public function tearDown()
-    {
-
-    }
-
     /**
      * @expectedException \MailMan\Exception\InvalidArgumentException
      */

@@ -22,30 +22,28 @@ class Message extends ZendMailMessage implements MessageInterface
     protected $encoding = 'UTF-8';
 
     /**
-     * Set the message body
-     *
-     * @param  null|string|\Zend\Mime\Message|object $body
-     * @throws Exception\InvalidArgumentException
-     * @return Message
+     * {@inheritdoc}
      */
     public function setBody($body)
     {
         if ($this->body instanceof ZendMimeMessage) {
             $headers = $this->getHeaders();
+            $toClean = [];
             foreach ($headers as $header) {
                 if (strpos(strtolower($header->getFieldName()), 'content') === 0) {
-                    $headers->removeHeader($header);
+                    $toClean[] = $header->getFieldName();
                 }
+            }
+            // NOTE: remove 'content' headers AFTER iterating them
+            foreach ($toClean as $headerName) {
+                $this->clearHeaderByName($headerName);
             }
         }
         return parent::setBody($body);
     }
 
     /**
-     * Path of the file to attach
-     *
-     * @param $attachment string
-     * @return $this
+     * {@inheritdoc}
      */
     public function addAttachment($attachment)
     {
@@ -73,8 +71,7 @@ class Message extends ZendMailMessage implements MessageInterface
     }
 
     /**
-     * @param $content string
-     * @return self
+     * {@inheritdoc}
      */
     public function addTextPart($content)
     {
@@ -89,8 +86,7 @@ class Message extends ZendMailMessage implements MessageInterface
     }
 
     /**
-     * @param $content string
-     * @return self
+     * {@inheritdoc}
      */
     public function addHtmlPart($content)
     {
@@ -106,8 +102,9 @@ class Message extends ZendMailMessage implements MessageInterface
 
     /**
      * @return ZendMimeMessage
+     * @throws \MailMan\Exception\RuntimeException
      */
-    public function prepareBodyMessage()
+    protected function prepareBodyMessage()
     {
         $body = $this->getBody();
 

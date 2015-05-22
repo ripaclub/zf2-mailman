@@ -50,10 +50,7 @@ class ServiceAbstractFactory implements AbstractFactoryInterface
         $serviceConfig = $this->checkHasRequestedNameConfig($config, $requestedName);
         $transportConfig = $this->checkHasTransportConfig($config, $requestedName, $serviceLocator);
 
-        return (
-            $serviceConfig
-            && $transportConfig
-        );
+        return $serviceConfig && $transportConfig;
     }
 
     /**
@@ -112,7 +109,7 @@ class ServiceAbstractFactory implements AbstractFactoryInterface
      * @param $requestedName
      * @return bool
      */
-    public function checkHasRequestedNameConfig($config, $requestedName)
+    protected function checkHasRequestedNameConfig($config, $requestedName)
     {
         if (isset($config[$requestedName]) && is_array($config[$requestedName]) && !empty($config[$requestedName])) {
             return true;
@@ -127,7 +124,7 @@ class ServiceAbstractFactory implements AbstractFactoryInterface
      * @param $requestedName
      * @return bool
      */
-    public function checkHasTransportConfig($config, $requestedName, ServiceLocatorInterface $serviceLocator)
+    protected function checkHasTransportConfig($config, $requestedName)
     {
         if (isset($config[$requestedName]['transport'])
             && is_array($config[$requestedName]['transport'])
