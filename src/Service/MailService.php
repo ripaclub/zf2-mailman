@@ -30,6 +30,12 @@ class MailService implements MailInterface
     protected $defaultSender = null;
 
     /**
+     * @var string
+     */
+    protected $aliasSender = null;
+
+
+    /**
      * @var array
      */
     protected $additionalInfo = [];
@@ -37,11 +43,13 @@ class MailService implements MailInterface
     /**
      * @param TransportInterface $transport
      * @param null $defaultSender
+     * @param null $aliasSender
      */
-    public function __construct(TransportInterface $transport, $defaultSender = null)
+    public function __construct(TransportInterface $transport, $defaultSender = null, $aliasSender = null)
     {
         $this->transport = $transport;
         $this->defaultSender = $defaultSender;
+        $this->aliasSender = $aliasSender;
     }
 
     /**
@@ -61,7 +69,7 @@ class MailService implements MailInterface
     {
         if ($this->defaultSender) {
             if ($message->getFrom()->count() == 0) {
-                $message->setFrom($this->defaultSender);
+                $message->setFrom($this->defaultSender, $this->aliasSender);
             }
         }
         return $this;
