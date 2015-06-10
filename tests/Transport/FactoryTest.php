@@ -113,11 +113,11 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             sprintf(
                 '%s expects the "options" attribute to resolve to an existing class; received "%s"',
                 'MailMan\Transport\Factory::create',
-                'Zend\Mail\Transport\NullOptions'
+                'Zend\Mail\Transport\InMemoryOptions'
             )
         );
         $input = [
-            'type' => 'null',
+            'type' => 'inmemory',
             'options' => [
                 'opt1' => 'value1'
             ]

@@ -25,7 +25,7 @@ class Factory
      */
     protected static $classMap = [
         'file' => 'Zend\Mail\Transport\File',
-        'null' => 'Zend\Mail\Transport\Null',
+        'inmemory' => 'Zend\Mail\Transport\InMemory',
         'sendmail' => 'Zend\Mail\Transport\Sendmail',
         'smtp' => 'Zend\Mail\Transport\Smtp',
         'mandrill' => 'MailMan\Transport\Mandrill\Mandrill'
