@@ -1,6 +1,6 @@
 # ZF2 Mail Manager
 
-[![Packagist](https://img.shields.io/packagist/v/ripaclub/zf2-mailman.svg?style=flat-square)](https://packagist.org/packages/ripaclub/zf2-mailman) [![GitHub license](https://img.shields.io/github/license/ripaclub/zf2-mailman.svg?style=flat-square)](https://github.com/ripaclub/zf2-mailman/blob/master/LICENSE) [![Travis branch](https://img.shields.io/travis/ripaclub/zf2-mailman/master.svg?style=flat-square)](https://travis-ci.org/ripaclub/zf2-mailman) [![Coveralls branch](https://img.shields.io/coveralls/ripaclub/zf2-mailman/master.svg?style=flat-square)](https://coveralls.io/r/ripaclub/zf2-mailman?branch=master)
+[![Packagist](https://img.shields.io/packagist/v/ripaclub/zf2-mailman.svg?style=flat-square)](https://packagist.org/packages/ripaclub/zf2-mailman) [![Travis branch](https://img.shields.io/travis/ripaclub/zf2-mailman/master.svg?style=flat-square)](https://travis-ci.org/ripaclub/zf2-mailman) [![Coveralls branch](https://img.shields.io/coveralls/ripaclub/zf2-mailman/master.svg?style=flat-square)](https://coveralls.io/r/ripaclub/zf2-mailman?branch=master)
 
 ## What is this?
 
