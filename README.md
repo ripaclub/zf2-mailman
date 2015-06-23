@@ -158,6 +158,21 @@ In this example we use the SMTP transport (shipped by ZF2).
 ],
 ```
 
+### Sendmail
+
+In this example we use the Sendmail transport (shipped by ZF2).
+
+```php
+'mailman' => [
+    'MailMan\Sendmail' => [
+        'default_sender' => 'my-name-is-methos@gmail.com',
+        'transport' => [
+            'type' => 'sendmail'
+        ],
+    ],
+],
+```
+
 ---
 
 [![Analytics](https://ga-beacon.appspot.com/UA-49655829-1/ripaclub/zf2-mailman)](https://github.com/igrigorik/ga-beacon)
