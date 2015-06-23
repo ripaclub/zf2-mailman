@@ -17,7 +17,7 @@ Add `ripaclub/zf2-mailman` to your `composer.json`.
 ```
 {
    "require": {
-       "ripaclub/zf2-mailman": "v0.2.0"
+       "ripaclub/zf2-mailman": "~0.3.1"
    }
 }
 ```
@@ -52,7 +52,7 @@ Configure a transport in your configuration file.
 Then we send a text only message.
 
 ```php
-$message = new MailMan\Message();
+$message = new \MailMan\Message();
 $message->addTextPart('Test email');
 $message->setSubject('My name is methos');
 $message->addFrom('my-name-is-methos@gmail.com', 'Methos');
@@ -67,7 +67,7 @@ $mailService->send($message);
 Do you want to send an email message with an attachment from filesystem?
 
 ```php
-$message = new MailMan\Message();
+$message = new \MailMan\Message();
 $message->addAttachment('/path/to/an/attachment.png');
 $message->setBody('Test email');
 $message->setSubject('My name is methos');
@@ -84,10 +84,10 @@ $mailService->send($message);
 $content = new ViewModel();
 $content->setTemplate('email/example.phtml');
 $content->setVariable('name', 'RipaClub');
-$message = new MailMan\Message();
+$message = new \MailMan\Message();
 $message->setSubject('Example email');
 $message->addHtmlPart($this->getServiceLocator()->get('ViewRenderer')->render($content));
-$message->addTo('ripaclbu@gmail.com', 'RipaClub');
+$message->addTo('ripaclub@gmail.com', 'RipaClub');
 /** @var $mailService \MailMan\Service\MailService */
 $mailService = $this->getServiceLocator()->get('MailMan\Gmail');
 $mailService->send($message);
