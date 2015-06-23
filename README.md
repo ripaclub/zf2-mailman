@@ -175,4 +175,4 @@ In this example we use the Sendmail transport (shipped by ZF2).
 
 ---
 
-[![Analytics](https://ga-beacon.appspot.com/UA-49655829-1/ripaclub/zf2-mailman)](https://github.com/igrigorik/ga-beacon)
+[![Analytics](https://ga-beacon.appspot.com/UA-49657176-3/zf2-mailman)](https://github.com/igrigorik/ga-beacon)
