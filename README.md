@@ -165,7 +165,7 @@ In this example we use the Sendmail transport (shipped by ZF2).
 ```php
 'mailman' => [
     'MailMan\Sendmail' => [
-        'default_sender' => 'my-name-is-methos@gmail.com',
+        'default_sender' => 'my-name-is-methos@yourdomain.com',
         'transport' => [
             'type' => 'sendmail'
         ],
