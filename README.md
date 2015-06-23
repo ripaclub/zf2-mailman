@@ -47,6 +47,16 @@ Configure a transport in your configuration file.
 ],
 ```
 
+Do not forget to add **MailMan** module to you `application.config.php` file.
+
+```php
+'modules' => [
+        // ...
+        'MailMan',
+        'Application',
+],
+```
+
 **Text only message**
 
 Then we send a text only message.
