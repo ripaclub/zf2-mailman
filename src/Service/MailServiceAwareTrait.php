@@ -12,7 +12,6 @@ namespace MailMan\Service;
 class MailServiceAwareTrait
 {
     protected $mailService;
-
     /**
      * @return null|MailInterface
      */
