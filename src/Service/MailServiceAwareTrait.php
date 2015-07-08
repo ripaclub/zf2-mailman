@@ -9,7 +9,7 @@
 namespace MailMan\Service;
 
 
-class MailServiceAwareTrait
+trait MailServiceAwareTrait
 {
     protected $mailService;
     /**
