@@ -17,7 +17,7 @@ Add `ripaclub/zf2-mailman` to your `composer.json`.
 ```
 {
    "require": {
-       "ripaclub/zf2-mailman": "~0.3.1"
+       "ripaclub/zf2-mailman": "~0.3.2"
    }
 }
 ```
